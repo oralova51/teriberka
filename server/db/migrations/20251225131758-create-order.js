@@ -22,7 +22,7 @@ module.exports = {
       status: {
         type: Sequelize.STRING,
       },
-      accses_token: {
+      access_token: {
         type: Sequelize.STRING,
       },
       createdAt: {

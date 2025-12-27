@@ -10,8 +10,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       product_id: DataTypes.INTEGER,
       email: DataTypes.STRING,
-      status: DataTypes.STRING,
-      accses_token: DataTypes.STRING,
+      status: {
+        type: DataTypes.STRING,
+        defaultValue: "pending",
+      },
+      access_token: DataTypes.STRING,
     },
     {
       sequelize,
