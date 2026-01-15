@@ -1,0 +1,29 @@
+.div_description {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 500px;
+    position: relative; /* важно для абсолютного позиционирования текста */
+}
+
+.description_polar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; 
+    overflow: visible;
+}
+
+.description_text {
+    position: relative; /* текст поверх картинки */
+    z-index: 2; 
+    color: white;
+    margin: 20px 100px;
+    padding: 30px 50px; /* чуть уменьшила горизонтальные паддинги для адаптивности */
+    text-align: center;
+    font-size: 22px;
+    border-radius: 8px; /* слегка скруглим углы для красоты */
+}

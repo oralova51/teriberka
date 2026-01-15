@@ -1,0 +1,136 @@
+@font-face {
+  font-family: "Architectural";
+  src: url("../public/Architectural.woff2") format("woff2"),
+       url("../public/Architectural.woff") format("woff");
+  font-style: normal;
+}
+
+.welcome_block {
+  height: 750px;
+  background-color: #004252;
+  overflow: hidden;
+  position: relative;
+}
+
+.welcome_img {
+  position: absolute;
+  bottom: -100px;
+  width: 100%;
+}
+
+.welcome_button{
+    position: absolute;
+    bottom: 250px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #47cb95;
+    color: white;
+    align-items: center;
+    
+}
+
+.polar_lights {
+  position: absolute;
+  top: 20px;
+  right: 200px;
+  width: 70%;
+}
+
+.welcome_text {
+  font-family: "Architectural";
+  color: white;
+  font-size: 130px;
+  position: absolute;
+  top: 100px;
+  right: 15%;
+  left: 15%;
+  text-align: center;
+  line-height: 1.1;
+  margin: 20px;
+}
+
+.welcome_small {
+  margin: 20px;
+  font-size: 100px;
+  font-weight: 400;
+}
+
+/* ---------- АДАПТИВ ---------- */
+
+@media (max-width: 1024px) {
+  .welcome_text {
+    font-size: 90px;
+    top: 80px;
+    right: 10%;
+    left: 10%;
+  }
+
+  .welcome_small {
+    font-size: 70px;
+  }
+
+  .polar_lights {
+    right: 100px;
+    width: 80%;
+  }
+}
+
+@media (max-width: 768px) {
+  .welcome_block {
+    height: 600px;
+  }
+
+  .welcome_text {
+    font-size: 64px;
+    top: 60px;
+    right: 5%;
+    left: 5%;
+    line-height: 1.15;
+    margin: 10px;
+  }
+
+  .welcome_small {
+    font-size: 48px;
+    margin: 10px;
+  }
+
+  .polar_lights {
+    top: 40px;
+    right: 20px;
+    width: 90%;
+  }
+
+  .welcome_img {
+    bottom: -60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcome_block {
+    height: 380px;
+  }
+
+  .welcome_text {
+    font-size: 42px;
+    top: 40px;
+    right: 4%;
+    left: 4%;
+    line-height: 1.2;
+    margin: 8px;
+  }
+
+  .welcome_small {
+    font-size: 32px;
+    margin: 8px;
+  }
+
+  .polar_lights {
+    top: 20px;
+    right: -40px;
+    width: 120%;
+  }
+
+  .welcome_img {
+    bottom: -30px;
+  }
+}
