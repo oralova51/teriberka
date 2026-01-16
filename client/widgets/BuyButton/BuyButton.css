@@ -1,0 +1,38 @@
+:root {
+  --btn-main: #47cb95;
+  --btn-main-hover: linear-gradient(135deg, #8ae4f3, #b6f6e5, #d6faff);
+  --btn-text: #ffffff;
+}
+button.btn {
+  background-color: var(--btn-main);
+  border: none;
+  border-radius: 5px;
+  color: var(--btn-text);
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.btn:hover {
+  background: var(--btn-main-hover);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Только для welcome-кнопки */
+.welcome_button {
+  position: absolute;
+  z-index: 10;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.welcome_button:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+}

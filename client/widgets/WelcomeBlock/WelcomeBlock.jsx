@@ -1,12 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import "./WelcomeBlock.css";
-import { Button } from "bootstrap";
+import BuyButton from "../BuyButton/BuyButton";
 
 export default function WelcomeBlock() {
-  function redirect() {
-    
-  }
-  
+  const [showModal, setShowModal] = useState(false); // по умолчанию false
+
+  console.log("showModal:", showModal);
+
   return (
     <div className="welcome_block">
       <img
@@ -19,7 +19,8 @@ export default function WelcomeBlock() {
         <br />
         Териберка в ваших ушах
       </h1>
-      <button className="welcome_button" onClick={redirect}>Начать путешествие</button>
+      <BuyButton className="btn welcome_button" onClick={() => setShowModal((prev) => !prev)} />
+      {showModal && <p className="modal_text">Модальное окно</p>}
       <img
         src="../../../public/noroot.png"
         className="welcome_img"

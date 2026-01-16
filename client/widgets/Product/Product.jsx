@@ -1,4 +1,5 @@
 import './Product.css';
+import BuyButton from "../BuyButton/BuyButton";
 
 function Product({ product }) {
   return (
@@ -11,7 +12,7 @@ function Product({ product }) {
         <p>
           {product.price}
         </p>
-        <button variant="primary">Купить</button>
+        <BuyButton className="btn"/>
     </div>
   );
 }
