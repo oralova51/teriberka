@@ -4,16 +4,28 @@ import WelcomeBlock from "../../widgets/WelcomeBlock/WelcomeBlock";
 import Description from "../../widgets/Description/Description";
 import Parts from "../../widgets/Parts/Parts";
 import CardList from "../../widgets/CardList/CardList";
+import Instructions from "../../widgets/Instructions/Instructions";
+import Feedback from "../../widgets/Feedback/Feedback";
+import CallToAction from "../../widgets/CallToAction/CallToAction";
+import Team from "../../widgets/Team/Team";
+import Disclaimer from "../../widgets/Disclaimer/Disclaimer";
+import Footer from "../../widgets/Footer/Footer";
 
 export default function MainPage() {
 
   return (
     <div className="main-page">
-      <MyNavbar></MyNavbar>
-      <WelcomeBlock></WelcomeBlock>
-      <Description></Description>
-      <Parts></Parts>
-      <CardList></CardList>
+      <MyNavbar />
+      <WelcomeBlock />
+      <Description />
+      <Parts />
+      <Instructions />
+      <Feedback />
+      <CallToAction />
+      <CardList />
+      <Team />
+      <Disclaimer />
+      <Footer />
     </div>
   );
 }

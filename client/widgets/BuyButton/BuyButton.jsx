@@ -1,6 +1,7 @@
 import "./BuyButton.css";
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 
 export default function BuyButton({ className }) {
@@ -16,11 +17,26 @@ export default function BuyButton({ className }) {
       </button>
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Покупка</Modal.Title>
+          <Modal.Title>Выберите тариф</Modal.Title>
         </Modal.Header>
-
         <Modal.Body>
-          Здесь может быть форма, описание тарифа, что угодно.
+                 <Dropdown>
+          <Dropdown.Toggle variant="primary" id="dropdown-tariffs">
+            Тарифы
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu>
+            <Dropdown.Item href="/product1" target="_blank">
+              Тариф 1
+            </Dropdown.Item>
+            <Dropdown.Item href="/product2" target="_blank">
+              Тариф 2
+            </Dropdown.Item>
+            <Dropdown.Item href="/product3" target="_blank">
+              Тариф 3
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
         </Modal.Body>
 
         <Modal.Footer>

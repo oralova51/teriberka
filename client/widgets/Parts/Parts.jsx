@@ -1,11 +1,12 @@
 import "./Parts.css";
 export default function Parts() {
   return (
-    <>
+    <div className="parts_block">
       <h2 className="text">Наш аудиогид разделён на 2 части:</h2>
-      <div className="container">
+      <div className="parts_container">
         <div className="parts">
-          <img className="img_parts"
+          <img
+            className="img_parts"
             src="../../../public/IMG_1498.JPG"
             alt="Пешее Путешествие с Леви и Афаном"
           />
@@ -20,7 +21,11 @@ export default function Parts() {
           </p>
         </div>
         <div className="parts">
-          <img className="img_parts" src="../../../public/IMG_1499.JPG" alt="Морские приключения" />
+          <img
+            className="img_parts"
+            src="../../../public/IMG_1499.JPG"
+            alt="Морские приключения"
+          />
           <h4 className="text">Морские приключения </h4>
           <p className="text">
             Затем вас ждет морское путешествие, где Леви расскажет вам об
@@ -32,6 +37,6 @@ export default function Parts() {
           </p>
         </div>
       </div>
-    </>
+      </div>
   );
 }

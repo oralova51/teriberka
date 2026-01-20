@@ -55,14 +55,21 @@
   font-weight: 400;
 }
 
-/* ---------- АДАПТИВ ---------- */
+/* Адаптив для большого экрана <1300px */
+@media (max-width: 1300px) {
+  .welcome_text {
+    left: 10%;
+    right: 10%;
+  }
+}
 
+/* Экраны <1024px */
 @media (max-width: 1024px) {
   .welcome_text {
     font-size: 90px;
     top: 80px;
-    right: 10%;
     left: 10%;
+    right: 10%;
   }
 
   .welcome_small {
@@ -75,6 +82,7 @@
   }
 }
 
+/* Экраны <768px */
 @media (max-width: 768px) {
   .welcome_block {
     height: 600px;
@@ -83,8 +91,8 @@
   .welcome_text {
     font-size: 64px;
     top: 60px;
-    right: 5%;
     left: 5%;
+    right: 5%;
     line-height: 1.15;
     margin: 10px;
   }
@@ -105,6 +113,7 @@
   }
 }
 
+/* Экраны <480px */
 @media (max-width: 480px) {
   .welcome_block {
     height: 380px;
@@ -113,8 +122,8 @@
   .welcome_text {
     font-size: 42px;
     top: 40px;
-    right: 4%;
     left: 4%;
+    right: 4%;
     line-height: 1.2;
     margin: 8px;
   }
