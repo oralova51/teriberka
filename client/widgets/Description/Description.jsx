@@ -46,7 +46,7 @@ export default function Description() {
       </div>
     </section>
     <div className="div_description" >
-    <img src="../../../public/Vector.png" alt="териберка" className="description_polar" />
+    <img src="/Vector.png" alt="териберка" className="description_polar" />
       <h2 className="description_text">
         Имена наших персонажей необычны для териберской местности. Вдохновленные
         знаменитым фильмом "Левиафан", этим художественным приёмом мы решили

@@ -1,7 +1,7 @@
 @font-face {
   font-family: "Architectural";
-  src: url("../public/Architectural.woff2") format("woff2"),
-       url("../public/Architectural.woff") format("woff");
+  src: url("/Architectural.woff2") format("woff2"),
+       url("/Architectural.woff") format("woff");
   font-style: normal;
 }
 

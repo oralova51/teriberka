@@ -27,13 +27,13 @@ export default function BuyButton({ className }) {
 
           <Dropdown.Menu>
             <Dropdown.Item href="/product1" target="_blank">
-              Тариф 1
+              Тариф "Для одинокого странника"
             </Dropdown.Item>
             <Dropdown.Item href="/product2" target="_blank">
-              Тариф 2
+              Тариф "Для путешествующих вдвоем"
             </Dropdown.Item>
             <Dropdown.Item href="/product3" target="_blank">
-              Тариф 3
+              Тариф "Для шумной компании"
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
