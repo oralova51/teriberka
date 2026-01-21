@@ -11,7 +11,7 @@ export default function Instructions() {
       <div className="images">
         <div className="card">
           <img className="instruction_img"
-            src="../../public/IMG_1495.JPG"
+            src="/IMG_1495.JPG"
             alt="Изображение сундука с денежками"
           />
           <h3>Оплата</h3>
@@ -19,7 +19,7 @@ export default function Instructions() {
         </div>
         <div className="card">
           <img className="instruction_img"
-            src="../../public/IMG_1496.JPG"
+            src="/IMG_1496.JPG"
             alt="Изображение ключика для доступа к аудиогиду"
           />
           <h3>Получение доступа</h3>
@@ -30,7 +30,7 @@ export default function Instructions() {
         </div>
         <div className="card">
           <img className="instruction_img"
-            src="../../public/IMG_1497.JPG"
+            src="/IMG_1497.JPG"
             alt="Изображение кита, слушающего аудиогид"
           />
           <h3>Прослушивание</h3>

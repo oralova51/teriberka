@@ -10,7 +10,7 @@ export default function WelcomeBlock() {
   return (
     <div className="welcome_block">
       <img
-        src="../../../public/Vector.png"
+        src="/Vector.png"
         className="polar_lights"
         alt="Сияние"
       />
@@ -22,7 +22,7 @@ export default function WelcomeBlock() {
       <BuyButton className="btn welcome_button" onClick={() => setShowModal((prev) => !prev)} />
       {showModal && <p className="modal_text">Модальное окно</p>}
       <img
-        src="../../../public/noroot.png"
+        src="/noroot.png"
         className="welcome_img"
         alt="Здесь могли бы быть скалы Териберки, но у вас что-то с интернетом"
       />

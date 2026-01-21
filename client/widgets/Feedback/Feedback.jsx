@@ -15,7 +15,7 @@ export default function Feedback() {
         <p className="name">Жанна</p>
       </div>
       <div className="feedback_card">
-        <img src="../../public/photo_2026-01-1917.29.24.jpeg" />
+        <img src="/photo_2026-01-1917.29.24.jpeg" />
         <p>
           Удобно, что можно слушать истории в любом порядке. Рекомендую всем,
           кто хочет глубже погрузиться в местную культуру!
@@ -23,7 +23,7 @@ export default function Feedback() {
         <p className="name">Денис</p>
       </div>
       <div className="feedback_card">
-        <img src="../../public/photo_2026-01-1917.31.23.jpeg" />
+        <img src="/photo_2026-01-1917.31.23.jpeg" />
         <p>
           Мы отправились в путешествие по Териберке с друзьями и использовали
           аудиогид как персонального рассказчика. Отличное дополнение к
@@ -32,7 +32,7 @@ export default function Feedback() {
         <p className="name">Варвара</p>
       </div>
       <div className="feedback_card">
-        <img src="../../public/photo_2026-01-1917.45.45.jpeg" />
+        <img src="/public/photo_2026-01-1917.45.45.jpeg" />
         <p>
          Рассказы погружают в атмосферу места, а подробная информация помогает лучше понять историю и природу.
         </p>

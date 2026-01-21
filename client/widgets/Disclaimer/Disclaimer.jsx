@@ -4,7 +4,7 @@ import "./Disclaimer.css";
 export default function Disclaimer() {
   return (
     <div className="disclaimer">
-    <img className="first_beard" src='../../public/5c45b1bd22ea23441144da9f4976d507b9e4542c.png' alt="чайка Териберки" />
+    <img className="first_beard" src='/5c45b1bd22ea23441144da9f4976d507b9e4542c.png' alt="чайка Териберки" />
      <div>
       <h2>Disclaimer</h2>
       <p>

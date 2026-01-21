@@ -10,7 +10,7 @@ function MyNavbar() {
         {/* Логотип слева */}
         <Navbar.Brand href="/">
           <img
-            src="../../public/logo.svg"
+            src="/logo.svg"
             width="40"
             height="40"
             className="d-inline-block align-top"

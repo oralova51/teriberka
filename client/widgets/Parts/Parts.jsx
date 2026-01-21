@@ -1,13 +1,13 @@
 import "./Parts.css";
 export default function Parts() {
   return (
-    <div className="parts_block">
+    <div className="parts_block" id="about">
       <h2 className="text">Наш аудиогид разделён на 2 части:</h2>
       <div className="parts_container">
         <div className="parts">
           <img
             className="img_parts"
-            src="../../../public/IMG_1498.JPG"
+            src="/IMG_1498.JPG"
             alt="Пешее Путешествие с Леви и Афаном"
           />
           <h4 className="text">Пешее Путешествие с Леви и Афаном</h4>
@@ -23,7 +23,7 @@ export default function Parts() {
         <div className="parts">
           <img
             className="img_parts"
-            src="../../../public/IMG_1499.JPG"
+            src="/IMG_1499.JPG"
             alt="Морские приключения"
           />
           <h4 className="text">Морские приключения </h4>
