@@ -48,6 +48,7 @@
   margin-top: auto;       /* вот это фиксирует имя внизу */
   font-weight: 600;
   text-align: right;
+  font-size: 18px;
   opacity: 0.85;
 }
 
@@ -67,6 +68,10 @@
   .feedback_card {
     flex: 0 0 calc(50% - 20px);
   }
+  .feedback_card img {
+    width: 50%;
+  }
+}
 
   @media (max-width: 500px) {
   .feedback_card {

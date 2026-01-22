@@ -7,7 +7,7 @@ export default function Feedback() {
       <h3 className="feedback_heading">Отзывы после прослушивания</h3>
       <div className="feedback_block">
       <div className="feedback_card">
-        <img src="../../public/photo_2024-07-1012.41.34.jpeg" />
+        <img src="/photo_2024-07-1012.41.34.jpeg" />
         <p>
           Замечательные истории, легко следовать маршруту, и каждый раздел полон
           интересных фактов.
@@ -32,7 +32,7 @@ export default function Feedback() {
         <p className="name">Варвара</p>
       </div>
       <div className="feedback_card">
-        <img src="/public/photo_2026-01-1917.45.45.jpeg" />
+        <img src="/photo_2026-01-1917.45.45.jpeg" />
         <p>
          Рассказы погружают в атмосферу места, а подробная информация помогает лучше понять историю и природу.
         </p>

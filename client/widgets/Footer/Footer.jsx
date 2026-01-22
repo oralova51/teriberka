@@ -6,14 +6,14 @@ export default function Footer() {
       <div className="footer-top">
         <h2 className="footer-heading">Свяжитесь с нами</h2>
         <div className="footer-socials">
-          <a href="#">
+          <a href="https://t.me/oralovalova">
             <img className="icon" src="/telegram.svg" alt="Telegram" />
           </a>
-          <a href="#">
-            <img className="icon" src="/instagram.svg" alt="Instagram" />
-          </a>
-          <a href="#">
+          <a href="https://m.vk.com/teriberka_audio">
             <img className="icon" src="/vk.svg" alt="VK" />
+          </a>
+           <a href="mailto:teriberka.audio@yandex.ru">
+            <img className="icon" src="/mail.svg" alt="VK" />
           </a>
         </div>
         <div className="footer-bones-wrapper">
@@ -27,10 +27,8 @@ export default function Footer() {
         </div>
 
         <nav className="footer-links">
-          <a href="#">Договор-оферта</a>
-          <a href="#">Способы оплаты</a>
-          <a href="#">Возврат</a>
-          <a href="#">Правовая информация</a>
+          <a href="https://disk.yandex.ru/i/mWh38jjm2cTC_Q" target="_blank" rel="noopener noreferrer">Договор-оферта, Политика конфиденциальности</a>
+          <a href="https://disk.yandex.ru/i/15yCbXtIdkIHvQ" target="_blank" rel="noopener noreferrer">Способы оплаты, возврата и остальные требования</a>
         </nav>
       </div>
 

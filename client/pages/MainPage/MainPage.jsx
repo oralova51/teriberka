@@ -20,8 +20,8 @@ export default function MainPage() {
       <Description />
       <Parts />
       <Instructions />
-      <Feedback />
       <CallToAction />
+      <Feedback />
       <CardList />
       <Team />
       <Disclaimer />

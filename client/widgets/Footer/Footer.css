@@ -1,11 +1,11 @@
 .icon {
   width: 40px;
   height: 40px;
+  transition: transform 0.3s;
 }
 
 .icon:hover {
-  width: 60px;
-  height: 60px;
+  transform: translateY(-5px) scale(1.25); /* 40px * 1.25 ≈ 50px */
 }
 
 .footer-logo {
@@ -43,6 +43,7 @@
   text-align: center;
   color: white;
   background-color: black;
+  padding: 10px;
 }
 
 .footer-content {
@@ -55,6 +56,10 @@
 
 .footer-socials, .footer-links {
   display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 10px;
+  margin: 10px;
   gap: 20px;
 }
 
@@ -65,6 +70,8 @@
 .footer a {
   color: white;
   text-decoration: none;
+  width: 150px;
+  font-size: 10px;
 }
 
 /* все состояния ссылки */
@@ -74,7 +81,7 @@
 .footer a:active {
   color: white; /* сохраняем белый */
   text-decoration: none; /* убираем подчеркивание */
-  transition: color 0.3s ease; /* плавное изменение при hover */
+  transition: color 0.2s ease; /* плавное изменение при hover */
 }
 
 .footer a:hover {
