@@ -2,13 +2,14 @@ import "./Instructions.css";
 
 export default function Instructions() {
   return (
-    <div>
+    <div className="instruction_block">
       <h2 className="instructions_header">Инструкция и Рекомендации</h2>
       <p>
         Стараемся каждый день, чтобы сделать ваше путешествие по Териберке еще
         более захватывающим и незабываемым
       </p>
       <div className="images">
+        <img src='/Vector.png' alt='северное сияние' className='polar_light_instruction'/>
         <div className="card">
           <img className="instruction_img"
             src="/IMG_1495.JPG"

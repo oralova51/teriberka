@@ -1,11 +1,21 @@
 import "./BuyButton.css";
-import { useState } from 'react';
-import Modal from 'react-bootstrap/Modal';
-import Dropdown from 'react-bootstrap/Dropdown';
+import { useState } from "react";
+import Modal from "react-bootstrap/Modal";
+import Dropdown from "react-bootstrap/Dropdown";
 
-
-export default function BuyButton({ className }) {
+export default function BuyButton({ products, className }) {
   const [show, setShow] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const handleSelect = (product) => {
+    setSelectedProduct(product);
+  };
+
+    const handleConfirm = () => {
+    if (!selectedProduct) return alert("Выберите тариф!");
+    // Пример: редирект на оплату
+    window.location.href = `/checkout/${selectedProduct.id}`;
+  };
 
   const handleOpen = () => setShow(true);
   const handleClose = () => setShow(false);
@@ -20,28 +30,32 @@ export default function BuyButton({ className }) {
           <Modal.Title>Выберите тариф</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-                 <Dropdown>
-          <Dropdown.Toggle variant="primary" id="dropdown-tariffs">
-            Тарифы
-          </Dropdown.Toggle>
+          <Dropdown>
+            <Dropdown.Toggle variant="primary" id="dropdown-tariffs">
+              Тарифы
+            </Dropdown.Toggle>
 
-          <Dropdown.Menu>
-            <Dropdown.Item href="/product1" target="_blank">
-              Тариф "Для одинокого странника"
-            </Dropdown.Item>
-            <Dropdown.Item href="/product2" target="_blank">
-              Тариф "Для путешествующих вдвоем"
-            </Dropdown.Item>
-            <Dropdown.Item href="/product3" target="_blank">
-              Тариф "Для шумной компании"
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+            <Dropdown.Menu>
+              {products && products.length > 0 ? (
+                products.map((product) => (
+                  <Dropdown.Item
+                    key={product.id}
+                    onClick={() =>handleSelect(product)}
+                  >
+                    {product.title} - {product.price} руб.
+                  </Dropdown.Item>
+                ))
+              ) : (
+                <Dropdown.Item disabled>Продукты загружаются...</Dropdown.Item>
+              )}
+            </Dropdown.Menu>
+          </Dropdown>
         </Modal.Body>
 
         <Modal.Footer>
-          <button onClick={handleClose}>
-            Закрыть
+          <button onClick={handleClose}>Закрыть</button>
+          <button onClick={handleConfirm} disabled={!selectedProduct}>
+            Подтвердить
           </button>
         </Modal.Footer>
       </Modal>

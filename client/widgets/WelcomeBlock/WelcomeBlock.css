@@ -64,7 +64,7 @@
 }
 
 /* Экраны <1024px */
-@media (max-width: 1024px) {
+@media (max-width: 1060px) {
   .welcome_text {
     font-size: 90px;
     top: 80px;

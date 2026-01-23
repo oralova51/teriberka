@@ -1,4 +1,4 @@
-import Product from "../../widgets/Product/Product";
+import { useState, useEffect } from "react";
 import MyNavbar from "../../widgets/Navigation/Navigation";
 import WelcomeBlock from "../../widgets/WelcomeBlock/WelcomeBlock";
 import Description from "../../widgets/Description/Description";
@@ -12,17 +12,32 @@ import Disclaimer from "../../widgets/Disclaimer/Disclaimer";
 import Footer from "../../widgets/Footer/Footer";
 
 export default function MainPage() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    async function getProducts() {
+      try {
+        const response = await fetch(import.meta.env.VITE_API + "/product");
+        const data = await response.json();
+        if (response.ok) setProducts(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getProducts();
+  }, []);
+  
 
   return (
     <div className="main-page">
       <MyNavbar />
-      <WelcomeBlock />
+      <WelcomeBlock products={products}/>
       <Description />
       <Parts />
       <Instructions />
       <CallToAction />
       <Feedback />
-      <CardList />
+      <CardList products={products} />
       <Team />
       <Disclaimer />
       <Footer />

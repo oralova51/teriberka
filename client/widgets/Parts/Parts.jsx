@@ -36,6 +36,7 @@ export default function Parts() {
             стихию.
           </p>
         </div>
+        <img src='/Vector.png' alt='северное сияние' className="polar_light_parts" />
       </div>
       </div>
   );
