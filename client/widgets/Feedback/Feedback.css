@@ -73,9 +73,8 @@
   }
 }
 
-  @media (max-width: 500px) {
+@media (max-width: 500px) {
   .feedback_card {
     flex: 0 0 calc(70% - 20px);
   }
-}
 }

@@ -1,9 +1,7 @@
-import React, {useState} from "react";
 import "./WelcomeBlock.css";
 import BuyButton from "../BuyButton/BuyButton";
 
-export default function WelcomeBlock( {products}) {
-  const [showModal, setShowModal] = useState(false); 
+export default function WelcomeBlock({ products }) {
   return (
     <div className="welcome_block">
       <img
@@ -16,8 +14,7 @@ export default function WelcomeBlock( {products}) {
         <br />
         Териберка в ваших ушах
       </h1>
-      <BuyButton products={products} className="btn welcome_button" onClick={() => setShowModal((prev) => !prev)} />
-      {showModal && <p className="modal_text">Модальное окно</p>}
+      <BuyButton products={products} className="btn welcome_button" />
       <img
         src="/noroot.png"
         className="welcome_img"

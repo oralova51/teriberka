@@ -35,7 +35,7 @@ export default function MainPage() {
       <Description />
       <Parts />
       <Instructions />
-      <CallToAction />
+      <CallToAction products={products} />
       <Feedback />
       <CardList products={products} />
       <Team />
