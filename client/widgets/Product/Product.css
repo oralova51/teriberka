@@ -37,3 +37,23 @@
   font-weight: bold;
   font-size: 1.1rem;
 }
+
+/* Карточки товаров на узком экране: не фиксированные 300px, превью масштабируется без искажений */
+@media (max-width: 480px) {
+  .cardList .card {
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+    min-height: 0;
+    margin: 8px;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+
+  .cardList .img {
+    width: min(100%, 200px);
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+}

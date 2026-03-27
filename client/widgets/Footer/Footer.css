@@ -94,3 +94,12 @@
     max-width: none;
   }
 }
+
+@media (max-width: 480px) {
+  .footer-socials,
+  .footer-links {
+    padding: 8px;
+    margin: 8px;
+    gap: 12px;
+  }
+}

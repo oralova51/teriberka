@@ -35,3 +35,14 @@
   align-items: center;
   justify-content: center;
 }
+
+/* Мобильные: меньше внешних отступов у блока — баланс с остальной страницей и шире колонка текста */
+@media (max-width: 480px) {
+  .cta {
+    margin: 24px 12px;
+    padding: 24px 16px;
+    max-width: none;
+    width: calc(100% - 24px);
+    box-sizing: border-box;
+  }
+}

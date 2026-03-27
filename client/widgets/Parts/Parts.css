@@ -91,16 +91,21 @@ p.text {
 @media (max-width: 768px) {
   h4.text {
     font-size: 24px;
-    padding: 10px 50px;
+    padding: 10px 24px;
+    width: min(100%, 360px);
+    max-width: calc(100vw - 32px);
   }
   .img_parts {
-    width: 200px;
-    height: 200px;
+    width: min(100%, 280px);
+    height: auto;
+    aspect-ratio: 350 / 400;
+    object-fit: cover;
   }
   p.text {
     min-height: auto;
     font-size: 18px;
-    width: 200px;
+    width: min(100%, 360px);
+    max-width: calc(100vw - 32px);
   }
 }
 
@@ -108,24 +113,35 @@ p.text {
 @media (max-width: 400px) {
   h4.text {
     font-size: 20px;
-    padding: 10px 15px;
+    padding: 8px 4px;
     height: auto;
-    width: 90%;
+    /* 90% + боковые margin/parts сжимали колонку — на всю ширину колонки .parts */
+    width: 100%;
+    max-width: 100%;
   }
   h2.text {
     font-size: 18px;
+    padding-left: 8px;
+    padding-right: 8px;
   }
   p.text {
     font-size: 16px;
     min-height: auto;
-    width: 90%;
+    width: 100%;
+    max-width: 100%;
   }
+  /* Крупнее и с сохранением пропорций кадра (как на десктопе), без квадрата 150×150 */
   .img_parts {
-    width: 150px;
-    height: 150px;
+    width: min(100%, 320px);
+    height: auto;
+    aspect-ratio: 350 / 400;
+    object-fit: cover;
   }
   .parts {
-    margin: 5px;
-    padding: 5px;
+    margin: 8px 0;
+    padding: 6px 8px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 }

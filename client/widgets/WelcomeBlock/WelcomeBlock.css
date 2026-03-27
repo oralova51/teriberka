@@ -122,15 +122,16 @@
   .welcome_text {
     font-size: 42px;
     top: 40px;
-    left: 4%;
-    right: 4%;
+    /* Фиксированные боковые отступы уже %-ных — чуть шире строка на узком экране */
+    left: 12px;
+    right: 12px;
     line-height: 1.2;
-    margin: 8px;
+    margin: 6px;
   }
 
   .welcome_small {
     font-size: 32px;
-    margin: 8px;
+    margin: 6px;
   }
 
   .polar_lights {
@@ -141,5 +142,9 @@
 
   .welcome_img {
     bottom: -30px;
+    /* Не вылезает за край вьюпорта при узкой ширине */
+    max-width: 100%;
+    width: 100%;
+    height: auto;
   }
 }

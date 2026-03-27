@@ -11,3 +11,11 @@
 .main-page{
     background-color: #004252;
 }
+
+@media (max-width: 480px) {
+  .cardList {
+    gap: 16px;
+    padding: 8px;
+    margin: 8px;
+  }
+}

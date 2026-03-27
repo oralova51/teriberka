@@ -280,3 +280,22 @@ button.btn {
     width: 100%;
   }
 }
+
+/* Очень узкие экраны (~iPhone SE): компактнее отступы у текста в модалке */
+@media (max-width: 400px) {
+  .buy-modal__header {
+    padding: 18px 14px 8px;
+  }
+
+  .buy-modal__body {
+    padding: 0 14px 8px;
+  }
+
+  .buy-modal__footer {
+    padding: 12px 14px 16px;
+  }
+
+  .buy-modal__plan {
+    padding: 14px;
+  }
+}
