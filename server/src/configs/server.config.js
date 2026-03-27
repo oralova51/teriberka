@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
 const corsConfig = {
-  origin: ['http://localhost:5173'],
+  origin: ['http://localhost:5174', 'http://localhost:5173', 'https://surely-enjoyed-kalong.cloudpub.ru', 'https://glumly-prosperous-clingfish.cloudpub.ru'],
   optionsSuccessStatus: 200,
   credentials: true,
 };

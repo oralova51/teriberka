@@ -1,0 +1,105 @@
+.icon {
+  width: 40px;
+  height: 40px;
+  transition: transform 0.3s;
+}
+
+.icon:hover {
+  transform: translateY(-5px) scale(1.25); /* 40px * 1.25 ≈ 50px */
+}
+
+.footer-logo {
+  width: 100px;
+  height: auto;
+}
+
+.footer-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-bones-wrapper {
+  width: 100%;
+  height: 550px; /* видимая высота футера */
+  overflow: hidden;
+  position: relative;
+}
+
+.footer-bones {
+  width: 100%;
+  height: 1050px; /* искусственно увеличиваем высоту для среза */
+  object-fit: cover; /* масштабируем изображение */
+  transform: translateY(
+    -500px
+  ); /* сдвигаем изображение вверх, чтобы убрать пустую верхнюю часть */
+}
+
+.footer-heading {
+  color: white;
+  text-align: center;
+}
+.footer-bottom {
+  text-align: center;
+  color: white;
+  background-color: black;
+  padding: 10px;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  background-color: black;
+}
+
+.footer-socials, .footer-links {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 10px;
+  margin: 10px;
+  gap: 20px;
+}
+
+.footer-links {
+  flex-wrap: wrap;
+}
+
+.footer a {
+  color: white;
+  text-decoration: none;
+  width: 50px;
+  font-size: 10px;
+}
+
+/* все состояния ссылки */
+.footer a:link,
+.footer a:visited,
+.footer a:hover,
+.footer a:active {
+  color: white; /* сохраняем белый */
+  text-decoration: none; /* убираем подчеркивание */
+  transition: color 0.2s ease; /* плавное изменение при hover */
+}
+
+.footer a:hover {
+  color: #8cd4cc; /* можно добавить красивый цвет при наведении */
+}
+
+@media (max-width: 900px) {
+  a {
+    flex: 1 1 30%; /* на маленьких экранах карточка занимает всю ширину */
+    max-width: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-socials,
+  .footer-links {
+    padding: 8px;
+    margin: 8px;
+    gap: 12px;
+  }
+}
