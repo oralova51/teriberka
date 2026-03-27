@@ -82,19 +82,122 @@
   }
 }
 
-/* Экраны <768px */
-@media (max-width: 768px) {
+/*
+ * Планшеты и мобильные: блок на всю высоту вьюпорта, изображения на полную ширину,
+ * нижнее — у нижнего края экрана. Десктопные правила выше max-width: 1025px не затрагиваются.
+ */
+@media (max-width: 1024px) {
   .welcome_block {
-    height: 600px;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    min-height: -webkit-fill-available;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+
+  .welcome_img {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    margin-top: auto;
+    margin-bottom: 0;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    object-position: bottom center;
+    flex-shrink: 0;
+  }
+
+  .polar_lights {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    margin: 0;
+    object-fit: contain;
+    object-position: top center;
+  }
+
+  .welcome_button {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    align-self: center;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
   }
 
   .welcome_text {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    flex-shrink: 0;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+    /* Перекрываем 90px из блока 1060: на узкой ширине иначе ломается вёрстка */
+    font-size: clamp(2rem, 5vw + 0.85rem, 4.5rem);
+    line-height: 1.12;
+    padding-top: clamp(72px, 14vh, 160px);
+    padding-inline: clamp(12px, 4vw, 28px);
+  }
+
+  .welcome_small {
+    font-size: clamp(1.5rem, 3.8vw + 0.65rem, 3.5rem);
+  }
+}
+
+/* До ~919px: усиленная защита от горизонтального сдвига и переполнения */
+@media (max-width: 919px) {
+  .welcome_block {
+    overflow-x: hidden;
+  }
+
+  .welcome_text {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .polar_lights {
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .welcome_img {
+    max-width: 100%;
+  }
+}
+
+/* Экраны <768px — типографика и плотность отступов */
+@media (max-width: 768px) {
+  .welcome_text {
     font-size: 64px;
-    top: 60px;
-    left: 5%;
-    right: 5%;
     line-height: 1.15;
     margin: 10px;
+    padding-top: clamp(64px, 12vh, 140px);
   }
 
   .welcome_small {
@@ -103,48 +206,37 @@
   }
 
   .polar_lights {
-    top: 40px;
-    right: 20px;
-    width: 90%;
-  }
-
-  .welcome_img {
-    bottom: -60px;
+    top: 0;
   }
 }
 
 /* Экраны <480px */
 @media (max-width: 480px) {
-  .welcome_block {
-    height: 380px;
-  }
-
   .welcome_text {
     font-size: 42px;
-    top: 40px;
-    /* Фиксированные боковые отступы уже %-ных — чуть шире строка на узком экране */
-    left: 12px;
-    right: 12px;
+    left: auto;
+    right: auto;
     line-height: 1.2;
     margin: 6px;
+    padding-top: clamp(56px, 10vh, 120px);
+    padding-inline: 12px;
   }
 
   .welcome_small {
     font-size: 32px;
     margin: 6px;
   }
+}
 
-  .polar_lights {
-    top: 20px;
-    right: -40px;
-    width: 120%;
+/* Узкий экран в альбомной ориентации: не сжимать блок меньше видимой высоты */
+@media (max-width: 1024px) and (orientation: landscape) and (max-height: 500px) {
+  .welcome_block {
+    min-height: 100vh;
+    min-height: 100dvh;
+    min-height: -webkit-fill-available;
   }
 
-  .welcome_img {
-    bottom: -30px;
-    /* Не вылезает за край вьюпорта при узкой ширине */
-    max-width: 100%;
-    width: 100%;
-    height: auto;
+  .welcome_text {
+    padding-top: clamp(48px, 8vh, 96px);
   }
 }
