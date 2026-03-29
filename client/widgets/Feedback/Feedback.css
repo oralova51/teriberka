@@ -1,0 +1,80 @@
+.feedback_block {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.feedback_card {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: 450px;
+
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 16px;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(6px);
+
+  color: #fff;
+}
+
+.feedback_heading{
+    font-size: 30px;
+    color: white;
+    text-align: center;
+    margin: 20px;
+    padding: 20px;
+}
+
+.feedback_card img {
+  width: 80%;
+  height: 180px;
+  object-fit: cover;
+  object-position: center top; /* фокус выше центра */
+  border-radius: 12px;
+  margin: 0 auto 12px;
+  display: block;
+}
+
+.feedback_card p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.feedback_card .name {
+  margin-top: auto;       /* вот это фиксирует имя внизу */
+  font-weight: 600;
+  text-align: right;
+  font-size: 18px;
+  opacity: 0.85;
+}
+
+.feedback_card {
+  flex: 0 0 300px; /* базовый размер */
+}
+
+/* Большие экраны — 4 в ряд */
+@media (min-width: 1200px) {
+  .feedback_card {
+    flex: 0 0 calc(25% - 20px);
+  }
+}
+
+/* Средние экраны — строго 2 в ряд */
+@media (max-width: 1199px) {
+  .feedback_card {
+    flex: 0 0 calc(50% - 20px);
+  }
+  .feedback_card img {
+    width: 50%;
+  }
+}
+
+@media (max-width: 500px) {
+  .feedback_card {
+    flex: 0 0 calc(70% - 20px);
+  }
+}

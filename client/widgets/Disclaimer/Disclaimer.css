@@ -1,0 +1,53 @@
+.disclaimer {
+  position: relative;
+  padding: 100px;
+  margin: 100px;
+  color: #fff;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.disclaimer > div {
+  max-width: 800px;
+}
+
+.disclaimer h2 {
+  margin-bottom: 32px;
+  font-size: 36px;
+}
+
+.disclaimer p {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* Птицы */
+
+.first_beard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 150px;
+  height: auto;
+}
+
+.second_beard {
+  position: absolute;
+  right: -15px;
+  bottom: 0;
+  width: 200px;
+  height: auto;
+  transform: scaleX(-1);
+}
+
+@media (max-width: 700px) {
+  .first_beard {
+    top: -60px; /* сдвигаем вверх на 20px */
+  }
+  .second_beard {
+    bottom: -60px; /* сдвигаем ниже на 20px */
+  }
+}
