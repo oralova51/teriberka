@@ -5,5 +5,6 @@ module.exports = {
   openRouterApiKey: process.env.OPENROUTER_API_KEY,
   port: process.env.PORT,
   chunkSize: 100,
-  topP: 1,
+  /** Сколько лучших чанков подмешивать в RAG (по смыслу — top-K, не nucleus sampling) */
+  topP: 3,
 };

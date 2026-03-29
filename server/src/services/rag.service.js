@@ -16,7 +16,6 @@ class RAGService {
       .filter((part) => part.length > 0)
       .map((part) => 'CHUNK' + (part.startsWith(':') ? part : ': ' + part));
 
-      console.log(chunks);
     return chunks;
   }
 

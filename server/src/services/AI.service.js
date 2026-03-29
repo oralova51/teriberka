@@ -1,11 +1,22 @@
+const path = require('path');
 const axios = require('axios');
 const https = require('https');
 const oAuth = require('../utils/gigaChatAuth');
 const { gigaChatUrl } = require('../configs/aiConfig');
+const ragService = require('./rag.service');
+
+/** База знаний для RAG: текст из `public`, разбивается на чанки в RAG-сервисе */
+const DEFAULT_KB_PATH = path.join(__dirname, '../../public/texts/text.txt');
 
 const SYSTEM_PROMPT = `
-Ты — виртуальный гид по имени Леви, помогаешь клиентам проконсультироваться по путешествую в Териберку.
-`;
+Ты — виртуальный гид по имени Леви. Помогаешь клиентам с вопросами о путешествии в Териберку.
+
+Как отвечать:
+- Пиши коротко и по-человечески, как в живом разговоре с туристом.
+- Ниже могут быть фрагменты справочника — это сырые материалы. Используй из них только факты, переформулируй своими словами под конкретный вопрос; не пересказывай и не копируй фрагмент целиком.
+- Не повторяй и не озаглавливай ответ как «чанк», не выводи служебные пометки из справки.
+- Если в фрагментах нет ответа на вопрос — скажи честно и предложи, что уточнить.
+`.trim();
 
 /** Максимум сообщений (user+assistant) на одну анонимную сессию в памяти */
 const MAX_MESSAGES_PER_SESSION = 40;
@@ -39,6 +50,11 @@ function trimHistory(history) {
   return history.slice(history.length - MAX_MESSAGES_PER_SESSION);
 }
 
+/** Убирает служебный префикс чанков из RAG, чтобы модель не цитировала его дословно */
+function normalizeChunkForPrompt(chunk) {
+  return chunk.replace(/^\s*CHUNK\s*:\s*/i, '').trim();
+}
+
 class AIService {
   /**
    * История чата для анонимной сессии (только в памяти процесса).
@@ -59,8 +75,19 @@ class AIService {
   static async chat(userMessage, sessionId) {
     const history = sessionId ? trimHistory(getOrCreateSession(sessionId) || []) : [];
 
+    await ragService.getFileIndex(DEFAULT_KB_PATH);
+    const contextChunks = await ragService.findRelevantChunks(userMessage);
+    const contextBlock =
+      contextChunks.length > 0
+        ? contextChunks.map(normalizeChunkForPrompt).filter(Boolean).join('\n\n')
+        : '';
+
+    const systemContent = contextBlock
+      ? `${SYSTEM_PROMPT}\n\n--- Справка для ответа (переформулируй, не цитируй дословно) ---\n${contextBlock}`
+      : SYSTEM_PROMPT;
+
     const messages = [
-      { role: 'system', content: SYSTEM_PROMPT },
+      { role: 'system', content: systemContent },
       ...history.map(({ role, content }) => ({ role, content })),
       { role: 'user', content: userMessage },
     ];
