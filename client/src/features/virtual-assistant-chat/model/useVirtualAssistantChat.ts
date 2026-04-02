@@ -4,11 +4,12 @@ import type {
   UseVirtualAssistantChatOptions,
   VirtualAssistantChatPhase,
 } from "./types";
+import { axiosInstance } from "../../../shared/lib/axiosInstance";
 
-const DEFAULT_OPEN_DELAY_MS = 10_000;
+const DEFAULT_OPEN_DELAY_MS = 1_000;
 const DEFAULT_ASSISTANT_NAME = "Ассистент Териберки";
 const DEFAULT_STUB_REPLY =
-  "Спасибо за сообщение! Я виртуальный помощник и пока отвечаю шаблоном — скоро здесь будет полноценный ответ.";
+  "Привет, странник! Я Леви, виртуальный гид по Териберке. Чем могу я помочь тебе?";
 
 function createMessage(
   role: ChatMessage["role"],
@@ -40,12 +41,17 @@ export function useVirtualAssistantChat(
       setPhase((previous) =>
         previous === "waiting" ? "visible" : previous,
       );
+      setMessages((previous) => [
+        ...previous,
+        createMessage("assistant", stubReply),
+      ]);
     }, openDelayMs);
 
     return () => {
       window.clearTimeout(timeoutId);
     };
   }, [openDelayMs]);
+
 
   const close = useCallback(() => {
     setPhase("dismissed");
@@ -60,10 +66,24 @@ export function useVirtualAssistantChat(
     setMessages((previous) => [
       ...previous,
       createMessage("user", trimmed),
-      createMessage("assistant", stubReply),
     ]);
+    axiosInstance.post("/ai/chat", {
+      message: trimmed,
+    })
+    .then((response) => {
+      setMessages((previous) => [
+        ...previous,
+        createMessage("assistant", response.data.content),
+      ]);
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+
     setInputValue("");
   }, [inputValue, stubReply]);
+
+  console.log("messages", messages);
 
   const handleInputChange = useCallback((value: string) => {
     setInputValue(value);
