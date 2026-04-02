@@ -1,4 +1,5 @@
 import MainPage from "./pages/MainPage/MainPage";
+import { VirtualAssistantChatWidget } from "./widgets/VirtualAssistantChat";
 import { BrowserRouter, Routes, Route } from "react-router";
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
         <Route path="/" element={<MainPage />} />
       </Routes>
     </BrowserRouter>
+    <VirtualAssistantChatWidget />
     </>
   );
 }
