@@ -1,10 +1,16 @@
+export type ChatResponse = {
+  data: {
+    data: ChatMessage,
+    error: Error | null;
+    statusCode: number;
+    message: string | null;
+  };
+};
+
 export type ChatMessageRole = "user" | "assistant";
 
 export type ChatMessage = {
-  id: string;
-  role: ChatMessageRole;
   content: string;
-  createdAt: number;
 };
 
 export type VirtualAssistantChatPhase = "waiting" | "visible" | "dismissed";

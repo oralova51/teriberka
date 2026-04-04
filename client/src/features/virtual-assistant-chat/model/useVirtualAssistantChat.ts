@@ -3,6 +3,7 @@ import type {
   ChatMessage,
   UseVirtualAssistantChatOptions,
   VirtualAssistantChatPhase,
+  ChatResponse,
 } from "./types";
 import { axiosInstance } from "../../../shared/lib/axiosInstance";
 
@@ -70,14 +71,14 @@ export function useVirtualAssistantChat(
     axiosInstance.post("/ai/chat", {
       message: trimmed,
     })
-    .then((response) => {
+    .then((response: ChatResponse) => {
       console.log("response", response),
       setMessages((previous) => [
         ...previous,
         createMessage("assistant", response.data.data.content),
       ]);
     })
-    .catch((error) => {
+    .catch((error: Error) => {
       console.error(error);
     })
 
