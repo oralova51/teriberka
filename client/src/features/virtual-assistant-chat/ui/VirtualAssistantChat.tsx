@@ -68,7 +68,7 @@ export function VirtualAssistantChat(props: VirtualAssistantChatProps) {
                     : styles.bubbleAssistant,
                 ].join(" ")}
               >
-                {message.text}
+                {message.content}
               </li>
             ))}
           </ul>

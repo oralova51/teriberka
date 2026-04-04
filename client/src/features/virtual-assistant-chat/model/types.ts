@@ -3,7 +3,7 @@ export type ChatMessageRole = "user" | "assistant";
 export type ChatMessage = {
   id: string;
   role: ChatMessageRole;
-  text: string;
+  content: string;
   createdAt: number;
 };
 

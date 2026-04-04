@@ -13,12 +13,12 @@ const DEFAULT_STUB_REPLY =
 
 function createMessage(
   role: ChatMessage["role"],
-  text: string,
+  content: string,
 ): ChatMessage {
   return {
     id: crypto.randomUUID(),
     role,
-    text,
+    content,
     createdAt: Date.now(),
   };
 }
@@ -71,9 +71,10 @@ export function useVirtualAssistantChat(
       message: trimmed,
     })
     .then((response) => {
+      console.log("response", response),
       setMessages((previous) => [
         ...previous,
-        createMessage("assistant", response.data.content),
+        createMessage("assistant", response.data.data.content),
       ]);
     })
     .catch((error) => {
