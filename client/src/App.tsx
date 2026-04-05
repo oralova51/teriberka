@@ -1,12 +1,18 @@
-import React from "react";
+import MainPage from "./pages/MainPage/MainPage";
+import { VirtualAssistantChatWidget } from "./widgets/VirtualAssistantChat";
+import { BrowserRouter, Routes, Route } from "react-router";
 
 function App() {
-
   return (
     <>
-    <h1>Аудиогид по Териберке</h1>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+      </Routes>
+    </BrowserRouter>
+    <VirtualAssistantChatWidget />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
