@@ -3,8 +3,9 @@ import type {
   ChatMessage,
   UseVirtualAssistantChatOptions,
   VirtualAssistantChatPhase,
-  ChatResponse,
+  ChatAPIBody,
 } from "./types";
+import type { AxiosResponse } from "axios";
 import { axiosInstance } from "../../../shared/lib/axiosInstance";
 
 const DEFAULT_OPEN_DELAY_MS = 1_000;
@@ -68,14 +69,13 @@ export function useVirtualAssistantChat(
       ...previous,
       createMessage("user", trimmed),
     ]);
-    axiosInstance.post("/ai/chat", {
+    axiosInstance.post<ChatAPIBody>("/ai/chat", {
       message: trimmed,
     })
-    .then((response: ChatResponse) => {
-      console.log("response", response),
+    .then((response: AxiosResponse<ChatAPIBody>) => {
       setMessages((previous) => [
         ...previous,
-        createMessage("assistant", response.data.data.content),
+        createMessage("assistant", response.data.data?.content ?? ""),
       ]);
     })
     .catch((error: Error) => {
@@ -84,8 +84,6 @@ export function useVirtualAssistantChat(
 
     setInputValue("");
   }, [inputValue, stubReply]);
-
-  console.log("messages", messages);
 
   const handleInputChange = useCallback((value: string) => {
     setInputValue(value);

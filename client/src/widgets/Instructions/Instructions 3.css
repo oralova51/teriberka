@@ -1,0 +1,76 @@
+.instruction_block {
+  z-index: 0;
+  position: relative;
+}
+.images {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+.polar_light_instruction {
+  height: 800px;
+  z-index: 0;
+  position: absolute;
+  bottom: 0px;
+  top: 0px;
+  right: 0px;
+  transform: scaleX(-1);
+}
+
+.instruction_img {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  z-index: 0;
+}
+
+p,
+.instructions_header {
+  color: white;
+  text-align: center;
+  padding: 10px;
+  margin: 10px;
+}
+
+.instructions_header {
+  font-size: 30px;
+}
+
+.instructions_text {
+  color: black;
+  font-size: 15px;
+  margin: 5px;
+  padding: 5px;
+}
+
+/*
+  Карточки здесь используют класс .card из Product.css — на мобильных задаём свои размеры и отступы.
+  Изображения: вписываем в круг без фиксированной высоты, чтобы не казались «сплюснутыми».
+*/
+@media (max-width: 480px) {
+  .instruction_block .images .card {
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+    min-height: 0;
+    margin: 8px auto;
+    padding: 10px 12px;
+    box-sizing: border-box;
+  }
+
+  .instruction_block .instruction_img {
+    width: min(100%, 168px);
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  .instructions_header,
+  .instruction_block > p {
+    padding: 8px 12px;
+    margin: 8px 12px;
+  }
+}

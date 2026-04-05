@@ -1,0 +1,59 @@
+.card{
+    display: flex;
+    width: 300px;
+    height: 350px;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+    padding: 10px;
+}
+
+.img{
+ height: 150px;
+ width: 150px;
+ border-radius: 5px;
+}
+
+.title{
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.product_description{
+    color: black;
+    font-size: 14px;
+    margin: 10px;
+}
+
+.old_price {
+  color: #999;
+  text-decoration: line-through;
+  margin-bottom: 4px;
+}
+
+.price {
+  color: #000;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* Карточки товаров на узком экране: не фиксированные 300px, превью масштабируется без искажений */
+@media (max-width: 480px) {
+  .cardList .card {
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+    min-height: 0;
+    margin: 8px;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+
+  .cardList .img {
+    width: min(100%, 200px);
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+}
