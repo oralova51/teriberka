@@ -16,6 +16,7 @@ export function VirtualAssistantChat(props: VirtualAssistantChatProps) {
     messages,
     inputValue,
     assistantName,
+    isAssistantTyping,
     close,
     sendMessage,
     setInputValue,
@@ -27,8 +28,9 @@ export function VirtualAssistantChat(props: VirtualAssistantChatProps) {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    sendMessage();
+    void sendMessage();
   };
+
 
   return (
     <div
@@ -71,6 +73,11 @@ export function VirtualAssistantChat(props: VirtualAssistantChatProps) {
                 {message.content}
               </li>
             ))}
+            {isAssistantTyping && (
+              <li className={[styles.bubble, styles.bubbleAssistant].join(" ")}>
+                <span className={styles.typing}>Леви печатает...</span>
+              </li>
+            )}
           </ul>
         )}
       </div>
@@ -82,10 +89,11 @@ export function VirtualAssistantChat(props: VirtualAssistantChatProps) {
           placeholder="Ваше сообщение…"
           autoComplete="off"
           aria-label="Текст сообщения"
+          disabled={isAssistantTyping}
           onChange={(event) => setInputValue(event.target.value)}
         />
-        <Button type="submit" className={styles.send}>
-          Отправить
+        <Button type="submit" className={styles.send} disabled={isAssistantTyping}>
+          {isAssistantTyping ? "Печатает..." : "Отправить"}
         </Button>
       </form>
     </div>

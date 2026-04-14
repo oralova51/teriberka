@@ -23,7 +23,6 @@ export default function MainPage() {
         // if (response.ok) setProducts(data);
         const data = await axiosInstance.get("/product");
         setProducts(data.data);
-        console.log('........',data);
       } catch (error) {
         console.log(error);
       }

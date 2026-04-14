@@ -22,11 +22,11 @@
   gap: 0.5rem;
   padding: 0.75rem 0.75rem 0.75rem 1rem;
   color: #fff;
-  background: var(--main-color);
+  background: var(--polar-color);
   border-radius: 0.75rem 0.75rem 0 0;
 }
 
-.title {
+.title { 
   margin: 0;
   font-size: 1rem;
   font-weight: 700;
@@ -89,6 +89,11 @@
   color: #212529;
   background: #fff;
   border: 1px solid #dee2e6;
+}
+
+.typing {
+  color: #6c757d;
+  font-style: italic;
 }
 
 .form {
