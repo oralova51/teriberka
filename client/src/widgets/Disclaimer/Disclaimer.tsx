@@ -17,7 +17,7 @@ export default function Disclaimer() {
         расскажете нам о своих впечатлениях. Это можно сделать через социальные
         сети, используя хэштег #AudioTeriberka
       </p>
-        <img className="second_beard" src='../../public/5c45b1bd22ea23441144da9f4976d507b9e4542c.png' alt="чайка Териберки" />
+        <img className="second_beard" src='/5c45b1bd22ea23441144da9f4976d507b9e4542c.png' alt="чайка Териберки" />
     </div>
     </div>
   );
