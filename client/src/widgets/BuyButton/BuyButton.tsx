@@ -60,7 +60,9 @@ export default function BuyButton({
 
   const handlePayment = async (product) => {
     try {
-      const url = await PaymentApi.createPayment({ value: 500 });
+      console.log(product.price, '!!!!!!!!!>>>>>>>>>>><<<<<<<<<<<<');
+      
+      const url = await PaymentApi.createPayment({ value: product.price});
 
       if (!url) {
         throw new Error("Payment URL not found in response");
@@ -157,7 +159,7 @@ export default function BuyButton({
           <button
             type="button"
             className="buy-modal__primary"
-            onClick={handlePayment}
+            onClick={()=>handlePayment(selectedProduct)}
             disabled={!selectedProduct}
           >
             Перейти к оплате
