@@ -1,8 +1,12 @@
 import "./BuyButton.css";
 import { useMemo, useState } from "react";
 import Modal from "react-bootstrap/Modal";
+import { PaymentApi } from "../../features/payment/api";
 
-const PAYMENT_STUB_BASE_URL = "https://example.com/checkout";
+
+//сюда надо внести ссылку, которая приходит в ответе на постзапрос по эндпоинту /api/payment
+// const PAYMENT_STUB_BASE_URL = '';
+
 
 function formatPrice(price) {
   return new Intl.NumberFormat("ru-RU").format(price);
@@ -44,17 +48,6 @@ export default function BuyButton({
       (product) => product.id === resolvedSelectedProductId
     ) ?? null;
 
-  const buildPaymentStubUrl = (product) => {
-    // Оставляем внешний URL-заглушку, чтобы позже безболезненно заменить его реальным платежным сервисом.
-    const query = new URLSearchParams({
-      productId: String(product.id),
-      title: product.title,
-      price: String(product.price),
-    });
-
-    return `${PAYMENT_STUB_BASE_URL}?${query.toString()}`;
-  };
-
   const handleOpen = () => {
     setErrorMessage("");
     setShow(true);
@@ -65,26 +58,19 @@ export default function BuyButton({
     setShow(false);
   };
 
-  const handleConfirm = () => {
-    if (!selectedProduct) {
-      setErrorMessage("Сейчас тарифы недоступны. Попробуйте обновить страницу.");
-      return;
+  const handlePayment = async (product) => {
+    try {
+      const url = await PaymentApi.createPayment({ value: 500 });
+
+      if (!url) {
+        throw new Error("Payment URL not found in response");
+      }
+  
+      window.open(url, "_blank", "noopener,noreferrer");
+  
+    } catch (error) {
+      console.error("Payment error:", error);
     }
-
-    const paymentWindow = window.open(
-      buildPaymentStubUrl(selectedProduct),
-      "_blank",
-      "noopener,noreferrer"
-    );
-
-    if (!paymentWindow) {
-      setErrorMessage(
-        "Браузер заблокировал окно оплаты. Разрешите всплывающие окна и повторите попытку."
-      );
-      return;
-    }
-
-    handleClose();
   };
 
   return (
@@ -171,7 +157,7 @@ export default function BuyButton({
           <button
             type="button"
             className="buy-modal__primary"
-            onClick={handleConfirm}
+            onClick={handlePayment}
             disabled={!selectedProduct}
           >
             Перейти к оплате
