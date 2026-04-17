@@ -60,16 +60,11 @@ export default function BuyButton({
 
   const handlePayment = async (product) => {
     try {
-      console.log(product.price, '!!!!!!!!!>>>>>>>>>>><<<<<<<<<<<<');
-      
       const url = await PaymentApi.createPayment({ value: product.price});
-
       if (!url) {
         throw new Error("Payment URL not found in response");
       }
-  
       window.open(url, "_blank", "noopener,noreferrer");
-  
     } catch (error) {
       console.error("Payment error:", error);
     }
