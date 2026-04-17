@@ -40,6 +40,7 @@ export function VirtualAssistantChat(props: VirtualAssistantChatProps) {
       aria-labelledby={titleId}
     >
       <div className={styles.header}>
+        <img src='/photo_2026-04-17 15.03.17.jpeg' className={styles.avatar}></img>
         <h2 className={styles.title} id={titleId}>
           {assistantName}
         </h2>

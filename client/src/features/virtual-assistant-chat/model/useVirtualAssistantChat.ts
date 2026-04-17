@@ -8,7 +8,7 @@ import type {
 import { axiosInstance } from "../../../shared/lib/axiosInstance";
 
 const DEFAULT_OPEN_DELAY_MS = 1_000;
-const DEFAULT_ASSISTANT_NAME = "Виртуальный ассистент";
+const DEFAULT_ASSISTANT_NAME = "Проводник по Териберке";
 const DEFAULT_STUB_REPLY =
   "Привет, странник! Я Леви, виртуальный гид по Териберке. Чем могу я помочь тебе?";
 const TYPING_CHAR_DELAY_MS = 24;
