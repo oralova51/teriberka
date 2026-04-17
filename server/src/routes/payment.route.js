@@ -23,7 +23,7 @@ paymentRouter.post("/", async (req, res) => {
       capture: true, 
       confirmation: {
         type: "redirect",
-        return_url: "https://glumly-prosperous-clingfish.cloudpub.ru/",
+        return_url: "https://decidedly-restful-planthopper.cloudpub.ru/",
       },
     };
   
@@ -36,25 +36,27 @@ paymentRouter.post("/", async (req, res) => {
       console.log(payment);
   
       // Сохраняем платёж в БД
-      const paymentRecord = await PaymentService.createPaymentRecord(payment);
-      res.json(paymentRecord);
-      // res.json(payment);
+      // const paymentRecord = await PaymentService.createPaymentRecord(payment);
+      // res.json(paymentRecord);
+      res.json({payment});
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Ошибка при создании платежа" });
     }
   });
   
-  paymentRouter.post("/notifications", async (req, res) => {
+paymentRouter.post("/notifications", async (req, res) => {
     try {
-      const { object } = req.body;
-      console.log(object);
-      const updatedPayment = await PaymentService.updateStatus(object);
-      res.json({status: "ok"})
+      console.log('HEADERS:', req.headers)
+      console.log('!!!!!!!!!>>>>>>>>>>>.',req.body);
+      // const updatedPayment = await PaymentService.updateStatus(req.body);
+      res.sendStatus(200);
     } catch (error) {
       console.log('Ошибка при получении уведомления о платеже');
     }
   })
+
+
 
 
 module.exports = paymentRouter;
