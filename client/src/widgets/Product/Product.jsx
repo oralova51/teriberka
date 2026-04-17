@@ -1,5 +1,5 @@
 import "./Product.css";
-import BuyButton from "../BuyButton/BuyButton";
+import BuyButton from "@/features/payment/ui/BuyButton/BuyButton";
 
 function Product({ product, products }) {
   const oldPrice = Math.round(product.price * 1.1);

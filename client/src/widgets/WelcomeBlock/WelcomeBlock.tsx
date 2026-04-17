@@ -1,5 +1,5 @@
 import "./WelcomeBlock.css";
-import BuyButton from "../BuyButton/BuyButton";
+import BuyButton from "../../features/payment/ui/BuyButton/BuyButton";
 
 export default function WelcomeBlock({ products }) {
   return (

@@ -1,7 +1,7 @@
 import "./BuyButton.css";
 import { useMemo, useState } from "react";
 import Modal from "react-bootstrap/Modal";
-import { PaymentApi } from "../../features/payment/api";
+import { PaymentApi } from "../../api";
 
 
 //сюда надо внести ссылку, которая приходит в ответе на постзапрос по эндпоинту /api/payment

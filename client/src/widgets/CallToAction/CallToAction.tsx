@@ -1,4 +1,4 @@
-import BuyButton from "../BuyButton/BuyButton";
+import BuyButton from "../../features/payment/ui/BuyButton/BuyButton";
 import "./CallToAction.css";
 
 export default function CallToAction({ products }) {
