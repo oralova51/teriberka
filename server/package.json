@@ -13,6 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "@a2seven/yoo-checkout": "^1.1.4",
+    "@huggingface/inference": "^4.13.15",
+    "@supabase/supabase-js": "^2.103.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",

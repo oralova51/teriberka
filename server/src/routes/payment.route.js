@@ -36,9 +36,9 @@ paymentRouter.post("/", async (req, res) => {
       console.log(payment);
   
       // Сохраняем платёж в БД
-      // const paymentRecord = await PaymentService.createPaymentRecord(payment);
-      // res.json(paymentRecord);
-      res.json({payment});
+      const paymentRecord = await PaymentService.createPaymentRecord(payment);
+      res.json(paymentRecord);
+      res.json(payment);
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Ошибка при создании платежа" });
