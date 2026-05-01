@@ -11,16 +11,14 @@ import Team from "../../widgets/Team/Team";
 import Disclaimer from "../../widgets/Disclaimer/Disclaimer";
 import Footer from "../../widgets/Footer/Footer";
 import { axiosInstance } from "../../shared/lib/axiosInstance";
+import type { Product } from "@/entities/Product/model/model";
 
 export default function MainPage() {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     async function getProducts() {
       try {
-        // const response = await axiosInstance(import.meta.env.VITE_API + "/product");
-        // const data = await response.json();
-        // if (response.ok) setProducts(data);
         const data = await axiosInstance.get("/product");
         setProducts(data.data);
       } catch (error) {

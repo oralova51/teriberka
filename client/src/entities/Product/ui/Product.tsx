@@ -1,7 +1,13 @@
 import "./Product.css";
 import BuyButton from "@/features/payment/ui/BuyButton/BuyButton";
+import type { Product } from "../model/model";
 
-function Product({ product, products }) {
+type ProductProps = {
+  product: Product;
+  products: Product[];
+};
+
+function Product({ product, products }: ProductProps) {
   const oldPrice = Math.round(product.price * 1.1);
 
   return (

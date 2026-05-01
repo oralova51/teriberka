@@ -2,13 +2,20 @@ import "./BuyButton.css";
 import { useMemo, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { PaymentApi } from "../../api";
+import type { Product } from "@/entities/Product/model/model";
 
 
 //сюда надо внести ссылку, которая приходит в ответе на постзапрос по эндпоинту /api/payment
 // const PAYMENT_STUB_BASE_URL = '';
 
+type BuyButtonProps = {
+  products?: Product[];
+  className?: string;
+  defaultProduct?: Product | null;
+  buttonLabel?: string;
+};
 
-function formatPrice(price) {
+function formatPrice(price: Product['price']) {
   return new Intl.NumberFormat("ru-RU").format(price);
 }
 
@@ -17,9 +24,9 @@ export default function BuyButton({
   className = "",
   defaultProduct = null,
   buttonLabel = "Купить",
-}) {
+}: BuyButtonProps) {
   const [show, setShow] = useState(false);
-  const [selectedProductId, setSelectedProductId] = useState(null);
+  const [selectedProductId, setSelectedProductId] = useState<Product["id"] | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [isPaymentLoading, setIsPaymentLoading] = useState(false);
 
@@ -59,7 +66,7 @@ export default function BuyButton({
     setShow(false);
   };
 
-  const handlePayment = async (product) => {
+  const handlePayment = async (product: Product) => {
     if (!product || isPaymentLoading) {
       return;
     }
@@ -178,7 +185,10 @@ export default function BuyButton({
           <button
             type="button"
             className="buy-modal__primary"
-            onClick={() => handlePayment(selectedProduct)}
+            onClick={() => {
+              if (!selectedProduct) return;
+              handlePayment(selectedProduct);
+            }}
             disabled={!selectedProduct || isPaymentLoading}
           >
             {isPaymentLoading ? "Переход..." : "Перейти к оплате"}

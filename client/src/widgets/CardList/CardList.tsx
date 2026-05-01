@@ -1,4 +1,4 @@
-import Product from "../../entities/Product/Product";
+import Product from "../../entities/Product/ui/Product";
 import "./CardList.css";
 
 export default function CardList( {products} ) {
