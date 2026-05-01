@@ -1,0 +1,239 @@
+.success-payment-page {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+  padding: 40px 24px 140px;
+  box-sizing: border-box;
+  overflow: hidden;
+  background-color: var(--main-color);
+}
+
+.success-payment-page__content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 920px;
+}
+
+.success-payment-page__card {
+  width: 100%;
+  padding: 40px 36px;
+  border-radius: 24px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.15) 0%,
+      rgba(0, 0, 0, 0.3) 100%
+    ),
+    linear-gradient(
+    135deg,
+    rgba(138, 228, 243, 0.2),
+    rgba(71, 203, 149, 0.25)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+  color: #ffffff;
+}
+
+.success-payment-page__title {
+  margin: 0 0 20px;
+  font-size: clamp(28px, 2.8vw, 42px);
+  line-height: 1.2;
+  font-weight: 600;
+  text-align: center;
+}
+
+.success-payment-page__text {
+  margin: 0;
+  font-size: clamp(17px, 1.8vw, 22px);
+  line-height: 1.55;
+}
+
+.success-payment-page__support-link {
+  color: #b8ffe2;
+  text-decoration: underline;
+  text-decoration-color: rgba(184, 255, 226, 0.65);
+  text-underline-offset: 3px;
+}
+
+.success-payment-page__support-link:hover {
+  color: #ffffff;
+}
+
+.success-payment-page__text + .success-payment-page__text {
+  margin-top: 16px;
+}
+
+.success-payment-page__lights {
+  position: absolute;
+  top: -100px;
+  right: -170px;
+  width: min(58vw, 760px);
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.success-payment-page__mountains {
+  position: absolute;
+  left: 50%;
+  bottom: -40px;
+  transform: translateX(-50%);
+  width: min(1200px, 115%);
+  max-width: none;
+  opacity: 0.92;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.success-payment-page__bird {
+  position: absolute;
+  right: 7%;
+  top: 12%;
+  width: clamp(120px, 16vw, 220px);
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 4;
+}
+
+@media (max-width: 1200px) {
+  .success-payment-page {
+    padding-bottom: 120px;
+  }
+
+  .success-payment-page__card {
+    padding: 36px 30px;
+  }
+
+  .success-payment-page__bird {
+    right: 3%;
+    top: 8%;
+  }
+
+  .success-payment-page__mountains {
+    width: min(1080px, 120%);
+  }
+}
+
+@media (max-width: 992px) {
+  .success-payment-page {
+    padding: 32px 18px 96px;
+  }
+
+  .success-payment-page__title {
+    margin-bottom: 16px;
+  }
+
+  .success-payment-page__text {
+    line-height: 1.5;
+  }
+
+  .success-payment-page__bird {
+    top: 16px;
+    right: 14px;
+    width: 120px;
+    opacity: 0.7;
+  }
+
+  .success-payment-page__lights {
+    right: -200px;
+    top: -80px;
+    width: min(680px, 90vw);
+  }
+}
+
+@media (max-width: 768px) {
+  .success-payment-page {
+    padding: 24px 14px 78px;
+  }
+
+  .success-payment-page__card {
+    padding: 24px 20px;
+    border-radius: 18px;
+  }
+
+  .success-payment-page__title {
+    font-size: 28px;
+  }
+
+  .success-payment-page__text {
+    font-size: 17px;
+  }
+
+  .success-payment-page__mountains {
+    width: 145%;
+    bottom: -8px;
+  }
+
+  .success-payment-page__lights {
+    width: 95vw;
+    right: -220px;
+    top: -50px;
+    opacity: 0.75;
+  }
+
+  .success-payment-page__bird {
+    top: 10px;
+    right: 8px;
+    width: 88px;
+    opacity: 0.65;
+  }
+}
+
+@media (max-width: 576px) {
+  .success-payment-page {
+    align-items: flex-start;
+    padding-top: 46px;
+  }
+
+  .success-payment-page__card {
+    padding: 20px 16px;
+  }
+
+  .success-payment-page__title {
+    font-size: 24px;
+  }
+
+  .success-payment-page__text {
+    font-size: 16px;
+  }
+
+  .success-payment-page__bird {
+    display: none;
+  }
+
+  .success-payment-page__lights {
+    right: -240px;
+    top: -20px;
+    width: 115vw;
+  }
+
+  .success-payment-page__mountains {
+    width: 180%;
+    bottom: -14px;
+    left: 48%;
+  }
+}
+
+@media (max-width: 420px) {
+  .success-payment-page {
+    padding: 44px 10px 72px;
+  }
+
+  .success-payment-page__card {
+    border-radius: 16px;
+  }
+
+  .success-payment-page__title {
+    font-size: 22px;
+  }
+
+  .success-payment-page__text + .success-payment-page__text {
+    margin-top: 12px;
+  }
+}
