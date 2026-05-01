@@ -1,9 +1,7 @@
 .disclaimer {
   position: relative;
   padding: 100px;
-  margin: 100px;
   color: #fff;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,7 +53,7 @@
 /* Компактные экраны (~iPhone SE 375px): убираем чрезмерные поля — текст получает больше полезной ширины */
 @media (max-width: 480px) {
   .disclaimer {
-    padding: 24px 16px;
+    padding: 120px 16px;
     margin: 24px 12px;
   }
 

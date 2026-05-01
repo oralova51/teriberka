@@ -128,3 +128,64 @@
   height: 50px;
   border-radius: 50%;
 }
+
+.launcher {
+  position: fixed;
+  right: 3rem;
+  bottom: 3rem;
+  z-index: 1040;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+
+  background: var(--polar-color);
+  color: #fff;
+
+  box-shadow:
+    0 0.5rem 1.25rem rgba(0, 0, 0, 0.18),
+    0 0 0 1px rgba(0, 0, 0, 0.08);
+
+  font-size: 1.35rem;
+  font-weight: 700;
+  cursor: pointer;
+
+  position: fixed;
+}
+
+.launcher::before {
+  content: "";
+  position: absolute;
+
+  inset: -8px; /* ← расширяем наружу */
+  border-radius: 50%;
+
+  border: 2px solid var(--secondary-color);
+  pointer-events: none;
+}
+
+.launcher:hover {
+  filter: brightness(1.07);
+}
+
+.launcher:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+@media (max-width: 950px) {
+  .root {
+    width: min(100% - 1rem, 24rem);
+    right: 0.5rem;
+    bottom: 4.5rem;
+  }
+
+  .launcher {
+    right: 2rem;
+    bottom: 2rem;
+  }
+}

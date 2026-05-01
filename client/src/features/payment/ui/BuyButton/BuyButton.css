@@ -1,5 +1,5 @@
 :root {
-  --btn-main: #47cb95;
+  --btn-main: var(--secondary-color);
   --btn-main-hover: linear-gradient(135deg, #8ae4f3, #b6f6e5, #d6faff);
   --btn-text: #ffffff;
 }
