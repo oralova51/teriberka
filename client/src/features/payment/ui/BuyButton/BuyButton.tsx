@@ -21,6 +21,7 @@ export default function BuyButton({
   const [show, setShow] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isPaymentLoading, setIsPaymentLoading] = useState(false);
 
   const availableProducts = useMemo(() => {
     const mergedProducts = defaultProduct
@@ -59,14 +60,37 @@ export default function BuyButton({
   };
 
   const handlePayment = async (product) => {
+    if (!product || isPaymentLoading) {
+      return;
+    }
+
+    setErrorMessage("");
+    setIsPaymentLoading(true);
+    const paymentWindow = window.open("", "_blank", "noopener,noreferrer");
+
     try {
-      const url = await PaymentApi.createPayment({ value: product.price});
+      const url = await PaymentApi.createPayment({ value: product.price });
       if (!url) {
         throw new Error("Payment URL not found in response");
       }
-      window.open(url, "_blank", "noopener,noreferrer");
+
+      if (paymentWindow) {
+        paymentWindow.location.href = url;
+      } else {
+        window.open(url, "_blank", "noopener,noreferrer");
+      }
+
+      handleClose();
     } catch (error) {
       console.error("Payment error:", error);
+      setErrorMessage(
+        "Не удалось открыть страницу оплаты. Попробуйте еще раз."
+      );
+      if (paymentWindow) {
+        paymentWindow.close();
+      }
+    } finally {
+      setIsPaymentLoading(false);
     }
   };
 
@@ -154,10 +178,10 @@ export default function BuyButton({
           <button
             type="button"
             className="buy-modal__primary"
-            onClick={()=>handlePayment(selectedProduct)}
-            disabled={!selectedProduct}
+            onClick={() => handlePayment(selectedProduct)}
+            disabled={!selectedProduct || isPaymentLoading}
           >
-            Перейти к оплате
+            {isPaymentLoading ? "Переход..." : "Перейти к оплате"}
           </button>
         </Modal.Footer>
       </Modal>

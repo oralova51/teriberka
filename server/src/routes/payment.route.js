@@ -8,7 +8,6 @@ const secretKey = process.env.YOO_SECRET_KEY;
 const shopId = process.env.YOO_SHOP_ID;
 
 const YouKassa = new YooCheckout({ shopId, secretKey });
-const idempotenceKey = "02347fc4-a1f0-49db-807e-f0d67c2ed5a5";
 
 paymentRouter.post("/", async (req, res) => {
     const { value } = req.body;
@@ -35,13 +34,23 @@ paymentRouter.post("/", async (req, res) => {
   
       console.log(payment);
   
-      // Сохраняем платёж в БД
-      const paymentRecord = await PaymentService.createPaymentRecord(payment);
-      res.json(paymentRecord);
-      res.json(payment);
+      // Сохраняем платёж в БД и возвращаем фронту ссылку оплаты один раз.
+      await PaymentService.createPaymentRecord(payment);
+
+      const confirmationUrl = payment?.confirmation?.confirmation_url;
+      if (!confirmationUrl) {
+        return res
+          .status(502)
+          .json({ error: "Платеж создан, но ссылка на оплату не получена" });
+      }
+
+      return res.json({
+        payment_id: payment.id,
+        confirmation_url: confirmationUrl,
+      });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "Ошибка при создании платежа" });
+      return res.status(500).json({ error: "Ошибка при создании платежа" });
     }
   });
   
@@ -52,7 +61,7 @@ paymentRouter.post("/notifications", async (req, res) => {
       // const updatedPayment = await PaymentService.updateStatus(req.body);
       res.sendStatus(200);
     } catch (error) {
-      console.log('Ошибка при получении уведомления о платеже');
+      console.error('Ошибка при получении уведомления о платеже', error);
     }
   })
 

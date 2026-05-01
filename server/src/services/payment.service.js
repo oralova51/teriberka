@@ -13,8 +13,6 @@ class PaymentService {
         confirmation_url:
           paymentData.confirmation?.confirmation_url || null,
       });
-
-      console.log(payment);
       return payment;
     } catch (error) {
       console.error('Ошибка при создании записи платежа:', error);
