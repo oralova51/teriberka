@@ -23,4 +23,8 @@ export class PaymentApi {
 
     throw new Error("Payment URL not found in API response");
   }
+
+  static async getNotification(){
+    
+  }
 }

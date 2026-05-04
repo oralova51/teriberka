@@ -70,23 +70,19 @@ export default function BuyButton({
     if (!product || isPaymentLoading) {
       return;
     }
-
     setErrorMessage("");
     setIsPaymentLoading(true);
-    const paymentWindow = window.open("", "_blank", "noopener,noreferrer");
-
+    const paymentWindow = window.open("about:blank", "_blank");
     try {
       const url = await PaymentApi.createPayment({ value: product.price });
       if (!url) {
         throw new Error("Payment URL not found in response");
       }
-
       if (paymentWindow) {
         paymentWindow.location.href = url;
       } else {
         window.open(url, "_blank", "noopener,noreferrer");
       }
-
       handleClose();
     } catch (error) {
       console.error("Payment error:", error);
