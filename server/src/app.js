@@ -12,3 +12,4 @@ app.use('/api', apiRouter);
 const { PORT } = process.env || 3001;
 
 app.listen(PORT, () => console.log(`Сервер запущен на порту ${PORT}`));
+console.log("APP.JS LOADED");

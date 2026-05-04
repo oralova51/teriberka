@@ -15,4 +15,6 @@ router.use('/product', productRouter);
 router.use('/ai', aiRouter);
 router.use('/rag', ragRouter);
 
+console.log("API ROUTER LOADED");
+
 module.exports = router;
