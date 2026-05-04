@@ -150,4 +150,6 @@ paymentRouter.post("/notifications", async (req, res) => {
   }
 });
 
+console.log("PAYMENT ROUTE LOADED");
+
 module.exports = paymentRouter;
