@@ -41,7 +41,7 @@ paymentRouter.post("/", async (req, res) => {
     capture: true,
     confirmation: {
       type: "redirect",
-      return_url: "https://decidedly-restful-planthopper.cloudpub.ru/",
+      return_url: "https://teriberka.onrender.com/",
     },
   };
 
