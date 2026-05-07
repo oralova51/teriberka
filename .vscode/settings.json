@@ -9,6 +9,21 @@
             "name": "postgres",
             "database": "teriberka",
             "username": "admin"
+        },
+        {
+            "pgOptions": {
+                "ssl": {
+                    "rejectUnauthorized": true
+                }
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "dpg-d7u6acb7uimc739g4t5g-a.frankfurt-postgres.render.com",
+            "driver": "PostgreSQL",
+            "name": "postgres1",
+            "connectString": "postgresql://teriberka_user:rc29CnRbWulnRREQPhM3Sw9AwDJzXM8I@dpg-d7u6acb7uimc739g4t5g-a.oregon-postgres.render.com/teriberka",
+            "database": "teriberka",
+            "username": "teriberka_user"
         }
     ],
     "postman.settings.dotenv-detection-notification-visibility": false

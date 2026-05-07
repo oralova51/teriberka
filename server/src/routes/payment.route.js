@@ -9,6 +9,19 @@ const secretKey = process.env.YOO_SECRET_KEY;
 const shopId = process.env.YOO_SHOP_ID;
 
 const YouKassa = new YooCheckout({ shopId, secretKey });
+const YOOKASSA_REQUEST_TIMEOUT_MS = 15000;
+
+const withTimeout = (promise, timeoutMs) =>
+  Promise.race([
+    promise,
+    new Promise((_, reject) => {
+      setTimeout(() => {
+        const timeoutError = new Error(`YooKassa request timeout after ${timeoutMs}ms`);
+        timeoutError.code = 'REQUEST_TIMEOUT';
+        reject(timeoutError);
+      }, timeoutMs);
+    }),
+  ]);
 
 /**
  * ВАЖНО: логируем ВСЕ входящие запросы на этот роутер
@@ -28,7 +41,23 @@ paymentRouter.post("/", async (req, res) => {
   console.log('\n=== [CREATE PAYMENT] ===');
   console.log('BODY:', req.body);
 
-  const { value } = req.body;
+  const rawValue = req.body?.value;
+
+  if (!rawValue) {
+    return res.status(400).json({
+      error: "Поле value обязательно",
+    });
+  }
+
+  const normalizedValue = Number(rawValue);
+
+  if (!Number.isFinite(normalizedValue) || normalizedValue <= 0) {
+    return res.status(400).json({
+      error: "Некорректная сумма платежа",
+    });
+  }
+
+  const value = normalizedValue.toFixed(2);
 
   const createPayload = {
     amount: {
@@ -48,9 +77,12 @@ paymentRouter.post("/", async (req, res) => {
   try {
     console.log('[STEP 1] Creating payment in YooKassa...');
 
-    const payment = await YouKassa.createPayment(
-      createPayload,
-      Date.now().toString(),
+    const payment = await withTimeout(
+      YouKassa.createPayment(
+        createPayload,
+        Date.now().toString(),
+      ),
+      YOOKASSA_REQUEST_TIMEOUT_MS,
     );
 
     console.log('[STEP 2] Payment created:', payment.id);
@@ -76,6 +108,18 @@ paymentRouter.post("/", async (req, res) => {
 
   } catch (error) {
     console.error('[FATAL ERROR][CREATE PAYMENT]', error);
+
+    const isTimeout =
+      error?.code === 'REQUEST_TIMEOUT' ||
+      error?.code === 'ETIMEDOUT' ||
+      error?.code === 'ECONNABORTED';
+
+    if (isTimeout) {
+      return res.status(504).json({
+        error: "Платежный провайдер не ответил вовремя, попробуйте снова",
+      });
+    }
+
     return res.status(500).json({
       error: "Ошибка при создании платежа",
     });
@@ -173,10 +217,22 @@ paymentRouter.post("/notifications", async (req, res) => {
       status: req.body?.object?.status,
     });
 
-    /**
-     * КРИТИЧНО: всегда возвращаем 200
-     * иначе YooKassa будет ретраить
-     */
+    const isDbConnectionRefused =
+      error?.name === 'SequelizeConnectionRefusedError' ||
+      error?.code === 'ECONNREFUSED' ||
+      error?.original?.code === 'ECONNREFUSED';
+
+    if (isDbConnectionRefused) {
+      console.warn('[WARNING][WEBHOOK] DB connection refused. Returning 500 to trigger YooKassa retry.', {
+        payment_id: req.body?.object?.id,
+        status: req.body?.object?.status,
+        event: req.body?.event,
+      });
+      return res.sendStatus(500);
+    }
+
+    // Для остальных ошибок/валидации payload возвращаем 200,
+    // чтобы YooKassa не ретраила бесконечно.
     return res.sendStatus(200);
   }
 });

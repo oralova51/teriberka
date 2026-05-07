@@ -25,6 +25,8 @@ class PaymentService {
       // Ранее в проекте могли передавать либо req.body, либо object целиком.
       const paymentId = input?.id ?? input?.object?.id;
       const nextStatus = input?.status ?? input?.object?.status;
+      console.log(paymentId, nextStatus);
+      
 
       if (!paymentId || typeof paymentId !== 'string') {
         throw new Error(

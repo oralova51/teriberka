@@ -61,6 +61,20 @@ app.post('/', async (req, res) => {
       payment_id: req.body?.object?.id,
       status: req.body?.object?.status,
     });
+    const isDbConnectionRefused =
+      error?.name === 'SequelizeConnectionRefusedError' ||
+      error?.code === 'ECONNREFUSED' ||
+      error?.original?.code === 'ECONNREFUSED';
+
+    if (isDbConnectionRefused) {
+      console.warn('[WARNING][WEBHOOK @ /] DB connection refused. Returning 500 to trigger YooKassa retry.', {
+        payment_id: req.body?.object?.id,
+        status: req.body?.object?.status,
+        event: req.body?.event,
+      });
+      return res.sendStatus(500);
+    }
+
     return res.sendStatus(200);
   }
 });

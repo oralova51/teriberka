@@ -18,12 +18,6 @@ module.exports = {
       amount: {
         type: Sequelize.INTEGER
       },
-      currency: {
-        type: Sequelize.STRING
-      },
-      description: {
-        type: Sequelize.STRING
-      },
       confirmation_url: {
         type: Sequelize.STRING
       },
