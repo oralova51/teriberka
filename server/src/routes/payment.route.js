@@ -123,14 +123,39 @@ paymentRouter.post("/notifications", async (req, res) => {
     console.log('[STEP 4] Payment ID:', object.id);
     console.log('[STEP 4] Status:', object.status);
 
+    if (!object?.id || typeof object.id !== 'string') {
+      console.error('[ERROR][WEBHOOK] Invalid object.id', {
+        payment_id: object?.id,
+        event,
+      });
+      return res.sendStatus(200); // чтобы YooKassa не ретраила бесконечно
+    }
+
+    if (!object?.status || typeof object.status !== 'string') {
+      console.error('[ERROR][WEBHOOK] Invalid object.status', {
+        status: object?.status,
+        payment_id: object?.id,
+        event,
+      });
+      return res.sendStatus(200);
+    }
+
     /**
      * ШАГ 5: Обновляем статус
      */
     console.log('[STEP 5] Updating payment in DB...');
 
-    const updatedPayment = await PaymentService.updateStatus(req.body);
+    const updatedRows = await PaymentService.updateStatus(object);
 
-    console.log('[STEP 6] Payment updated:', updatedPayment);
+    console.log('[STEP 6] Payment updated. affectedRows:', updatedRows);
+
+    if (updatedRows === 0) {
+      console.warn('[WARNING][WEBHOOK] Payment not found in DB', {
+        payment_id: object?.id,
+        status: object?.status,
+        event,
+      });
+    }
 
     /**
      * ШАГ 6: Успешный ответ
@@ -140,7 +165,13 @@ paymentRouter.post("/notifications", async (req, res) => {
     return res.sendStatus(200);
 
   } catch (error) {
-    console.error('[FATAL ERROR][WEBHOOK]', error);
+    console.error('[FATAL ERROR][WEBHOOK]', {
+      message: error?.message,
+      stack: error?.stack,
+      event: req.body?.event,
+      payment_id: req.body?.object?.id,
+      status: req.body?.object?.status,
+    });
 
     /**
      * КРИТИЧНО: всегда возвращаем 200

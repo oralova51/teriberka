@@ -19,12 +19,31 @@ class PaymentService {
       throw error;
     }
   }
-  static async updateStatus(payment) {
+  static async updateStatus(input) {
     try {
-      await Payment.update(
-        { status: payment.status },
-        { where: { payment_id: payment.id } }
+      // YooKassa notifications: { event, object: { id, status, ... } }
+      // Ранее в проекте могли передавать либо req.body, либо object целиком.
+      const paymentId = input?.id ?? input?.object?.id;
+      const nextStatus = input?.status ?? input?.object?.status;
+
+      if (!paymentId || typeof paymentId !== 'string') {
+        throw new Error(
+          `[PaymentService.updateStatus] Invalid paymentId: ${String(paymentId)}`
+        );
+      }
+
+      if (!nextStatus || typeof nextStatus !== 'string') {
+        throw new Error(
+          `[PaymentService.updateStatus] Invalid nextStatus: ${String(nextStatus)}`
+        );
+      }
+
+      const [affectedRows] = await Payment.update(
+        { status: nextStatus },
+        { where: { payment_id: paymentId } }
       );
+
+      return affectedRows;
     } catch (error) {
       console.error('Ошибка при обновлении статуса платежа:', error);
       throw error;
