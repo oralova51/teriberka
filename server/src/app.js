@@ -3,6 +3,7 @@ require('dotenv').config();
 const serverConfig = require('./configs/server.config');
 const apiRouter = require('./routes/api.route');
 const PaymentService = require('./services/payment.service');
+const sendTelegramMessage = require("./utils/sendTelegramMessage")
 
 const app = express();
 const yookassaRawJson = express.raw({ type: 'application/json' });
@@ -50,6 +51,7 @@ const handleYookassaWebhook = async (req, res) => {
         event,
       });
     }
+    sendTelegramMessage(`Поступила оплатка: ${object.id}! Это какой-то ивент: ${event}`)
 
     return res.sendStatus(200);
   } catch (error) {

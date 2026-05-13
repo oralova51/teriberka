@@ -1,7 +1,6 @@
 const express = require('express');
 const PaymentService = require('../services/payment.service');
 const { YooCheckout } = require("@a2seven/yoo-checkout");
-const sendTelegramMessage = require("../utils/sendTelegramMessage")
 require("dotenv").config();
 
 const paymentRouter = express.Router();
@@ -206,7 +205,6 @@ paymentRouter.post("/notifications", async (req, res) => {
      * ШАГ 6: Успешный ответ
      */
     console.log('[STEP 7] Sending 200 to YooKassa');
-    sendTelegramMessage(`Поступила оплатка: ${object.id}! Это какой-то ивент: ${event}`)
 
     return res.sendStatus(200);
 
