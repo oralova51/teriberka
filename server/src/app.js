@@ -6,24 +6,27 @@ const PaymentService = require('./services/payment.service');
 
 const app = express();
 
-serverConfig(app);
-
 /**
- * Совместимость: YooKassa иногда шлёт Payment Notification на корневой URL (`POST /`)
- * вместо `POST /api/payment/notifications`.
- * Если payload похож на notification — обновляем статус и возвращаем 200,
- * чтобы YooKassa не ретраила.
+ * YooKassa webhook endpoint.
+ * Используем raw body только на этом маршруте, чтобы при необходимости
+ * можно было валидировать подпись/сырое тело без потери данных.
  */
-app.post('/', async (req, res) => {
+app.post('/api/payment/notifications', express.raw({ type: 'application/json' }), async (req, res) => {
   try {
-    const { event, object } = req.body || {};
+    const rawBody = Buffer.isBuffer(req.body) ? req.body.toString('utf8') : '';
+    const payload = rawBody ? JSON.parse(rawBody) : {};
+    const { event, object } = payload;
 
     if (!event || !object) {
-      return res.sendStatus(404);
+      console.error('[ERROR][WEBHOOK] Invalid payload structure', {
+        event,
+        hasObject: Boolean(object),
+      });
+      return res.sendStatus(200);
     }
 
     if (!object?.id || typeof object.id !== 'string') {
-      console.error('[ERROR][WEBHOOK @ /] Invalid object.id', {
+      console.error('[ERROR][WEBHOOK] Invalid object.id', {
         payment_id: object?.id,
         event,
       });
@@ -31,7 +34,7 @@ app.post('/', async (req, res) => {
     }
 
     if (!object?.status || typeof object.status !== 'string') {
-      console.error('[ERROR][WEBHOOK @ /] Invalid object.status', {
+      console.error('[ERROR][WEBHOOK] Invalid object.status', {
         status: object?.status,
         payment_id: object?.id,
         event,
@@ -39,13 +42,13 @@ app.post('/', async (req, res) => {
       return res.sendStatus(200);
     }
 
-    console.log('[WEBHOOK RECEIVED @ /] event:', event, 'payment_id:', object.id);
+    console.log('[WEBHOOK RECEIVED] event:', event, 'payment_id:', object.id);
 
     const updatedRows = await PaymentService.updateStatus(object);
-    console.log('[WEBHOOK @ /] updatedRows:', updatedRows);
+    console.log('[WEBHOOK] updatedRows:', updatedRows);
 
     if (updatedRows === 0) {
-      console.warn('[WARNING][WEBHOOK @ /] Payment not found in DB', {
+      console.warn('[WARNING][WEBHOOK] Payment not found in DB', {
         payment_id: object.id,
         status: object.status,
         event,
@@ -54,12 +57,9 @@ app.post('/', async (req, res) => {
 
     return res.sendStatus(200);
   } catch (error) {
-    console.error('[FATAL ERROR][WEBHOOK @ /]', {
+    console.error('[FATAL ERROR][WEBHOOK]', {
       message: error?.message,
       stack: error?.stack,
-      event: req.body?.event,
-      payment_id: req.body?.object?.id,
-      status: req.body?.object?.status,
     });
     const isDbConnectionRefused =
       error?.name === 'SequelizeConnectionRefusedError' ||
@@ -67,21 +67,31 @@ app.post('/', async (req, res) => {
       error?.original?.code === 'ECONNREFUSED';
 
     if (isDbConnectionRefused) {
-      console.warn('[WARNING][WEBHOOK @ /] DB connection refused. Returning 500 to trigger YooKassa retry.', {
-        payment_id: req.body?.object?.id,
-        status: req.body?.object?.status,
-        event: req.body?.event,
-      });
+      console.warn('[WARNING][WEBHOOK] DB connection refused. Returning 500 to trigger YooKassa retry.');
       return res.sendStatus(500);
+    }
+
+    if (error instanceof SyntaxError) {
+      console.error('[ERROR][WEBHOOK] Invalid JSON body');
+      return res.sendStatus(200);
     }
 
     return res.sendStatus(200);
   }
 });
 
+serverConfig(app);
+
+/**
+ * Render/uptime checks часто бьют в `/`, поэтому делаем явный health endpoint.
+ * Это убирает шумные 404 для GET/HEAD /.
+ */
+app.get('/', (_req, res) => res.status(200).send('ok'));
+app.head('/', (_req, res) => res.sendStatus(200));
+
 app.use('/api', apiRouter);
 
-const { PORT } = process.env || 3001;
+const PORT = Number(process.env.PORT) || 3001;
 
 app.listen(PORT, () => console.log(`Сервер запущен на порту ${PORT}`));
 console.log("APP.JS LOADED");
