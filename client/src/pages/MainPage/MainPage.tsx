@@ -17,15 +17,26 @@ export default function MainPage() {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
+    let cancelled = false;
+
     async function getProducts() {
       try {
-        const data = await axiosInstance.get("/product");
-        setProducts(data.data);
+        const { data } = await axiosInstance.get<Product[]>("/product");
+        const list = Array.isArray(data) ? data : [];
+        if (!cancelled) {
+          setProducts(list);
+        }
       } catch (error) {
-        console.log(error);
+        if (!cancelled) {
+          console.error(error);
+        }
       }
     }
-    getProducts();
+
+    void getProducts();
+    return () => {
+      cancelled = true;
+    };
   }, []);
   
 
