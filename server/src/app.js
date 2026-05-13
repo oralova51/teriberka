@@ -51,7 +51,7 @@ const handleYookassaWebhook = async (req, res) => {
         event,
       });
     }
-    sendTelegramMessage(`Поступила оплатка: ${object.id}! Это какой-то ивент: ${event}`)
+    await sendTelegramMessage(`Поступила оплатка: ${object.id}! Это какой-то ивент: ${event}`)
 
     return res.sendStatus(200);
   } catch (error) {
