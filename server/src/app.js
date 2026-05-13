@@ -5,13 +5,9 @@ const apiRouter = require('./routes/api.route');
 const PaymentService = require('./services/payment.service');
 
 const app = express();
+const yookassaRawJson = express.raw({ type: 'application/json' });
 
-/**
- * YooKassa webhook endpoint.
- * Используем raw body только на этом маршруте, чтобы при необходимости
- * можно было валидировать подпись/сырое тело без потери данных.
- */
-app.post('/api/payment/notifications', express.raw({ type: 'application/json' }), async (req, res) => {
+const handleYookassaWebhook = async (req, res) => {
   try {
     const rawBody = Buffer.isBuffer(req.body) ? req.body.toString('utf8') : '';
     const payload = rawBody ? JSON.parse(rawBody) : {};
@@ -78,7 +74,15 @@ app.post('/api/payment/notifications', express.raw({ type: 'application/json' })
 
     return res.sendStatus(200);
   }
-});
+};
+
+/**
+ * YooKassa webhook endpoint.
+ * Используем raw body только на этом маршруте, чтобы при необходимости
+ * можно было валидировать подпись/сырое тело без потери данных.
+ */
+app.post('/api/payment/notifications', yookassaRawJson, handleYookassaWebhook);
+app.post('/', yookassaRawJson, handleYookassaWebhook);
 
 serverConfig(app);
 
