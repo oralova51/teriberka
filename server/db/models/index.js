@@ -5,9 +5,14 @@ const Sequelize = require('sequelize');
 const process = require('process');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/database.json')[env];
+const allConfigs = require(__dirname + '/../config/database.json');
+const config = allConfigs[env] || allConfigs.development;
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 const db = {};
+
+if (!allConfigs[env]) {
+  console.warn(`[DB CONFIG] No config for NODE_ENV="${env}", fallback to "development"`);
+}
 
 let sequelize;
 if (config.use_env_variable) {

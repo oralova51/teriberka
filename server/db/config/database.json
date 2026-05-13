@@ -10,5 +10,29 @@
     },
     "seederStorage": "sequelize",
     "seederStorageTableName": "SequelizeData"
+  },
+  "test": {
+    "use_env_variable": "DB",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    },
+    "seederStorage": "sequelize",
+    "seederStorageTableName": "SequelizeData"
+  },
+  "production": {
+    "use_env_variable": "DB",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    },
+    "seederStorage": "sequelize",
+    "seederStorageTableName": "SequelizeData"
   }
 }
