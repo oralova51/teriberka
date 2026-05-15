@@ -61,7 +61,7 @@ paymentRouter.post("/", async (req, res) => {
 
   const createPayload = {
     amount: {
-      value: value,
+      value,
       currency: "RUB",
     },
     payment_method_data: {
@@ -70,7 +70,11 @@ paymentRouter.post("/", async (req, res) => {
     capture: true,
     confirmation: {
       type: "redirect",
-      confirmation_url: "https://teriberka.onrender.com/",
+      // сюда пользователь вернется ПОСЛЕ оплаты
+      return_url: `https://teriberka.onrender.com/payment-return`,
+    },
+    metadata: {
+      order_id: Date.now().toString(),
     },
   };
 
