@@ -1,3 +1,4 @@
+import Failed from "./pages/Failed/Failed";
 import MainPage from "./pages/MainPage/MainPage";
 import ReturnPage from "./pages/ReturnPage/ReturnPage";
 import SuccessPaymentPage from "./pages/SuccessPaymentPage/SuccessPaymentPage";
@@ -14,6 +15,7 @@ function AppContent() {
         <Route path="/" element={<MainPage />} />
         <Route path="/success" element={<SuccessPaymentPage />} />
         <Route path="/payment-return" element={<ReturnPage />} />
+        <Route path="/failed" element={<Failed />} />
       </Routes>
       {shouldShowAssistant && <VirtualAssistantChatWidget />}
     </>

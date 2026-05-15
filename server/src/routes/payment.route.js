@@ -241,6 +241,42 @@ paymentRouter.post("/notifications", async (req, res) => {
   }
 });
 
+paymentRouter.get('/status/:paymentId', async (req, res) => {
+  try {
+    console.log('params:', req.params)
+    const { paymentId } = req.params
+
+    const response = await fetch(
+      `https://api.yookassa.ru/v3/payments/${paymentId}`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization:
+            'Basic ' +
+            Buffer.from(
+              `${process.env.YOO_SHOP_ID}:${process.env.YOO_SECRET_KEY}`
+            ).toString('base64'),
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+
+    const payment = await response.json()
+    console.log(payment);
+
+    res.json({
+      status: payment.status,
+      paid: payment.paid,
+    })
+  } catch (error) {
+    console.error(error)
+
+    res.status(500).json({
+      error: 'Ошибка проверки платежа',
+    })
+  }
+});
+
 console.log("PAYMENT ROUTE LOADED");
 
 module.exports = paymentRouter;

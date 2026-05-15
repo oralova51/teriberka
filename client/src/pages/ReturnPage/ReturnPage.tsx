@@ -1,7 +1,9 @@
-import React from 'react'
+import Payment from '@/entities/Payment/ui/Payment'
 
 export default function ReturnPage() {
   return (
-    <div>ReturnPage</div>
+    <>
+    <Payment />
+    </>
   )
 }
