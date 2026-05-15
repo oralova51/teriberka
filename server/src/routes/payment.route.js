@@ -70,7 +70,7 @@ paymentRouter.post("/", async (req, res) => {
     capture: true,
     confirmation: {
       type: "redirect",
-      return_url: "https://teriberka.onrender.com/",
+      confirmation_url: "https://teriberka.onrender.com/",
     },
   };
 
