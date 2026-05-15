@@ -58,6 +58,9 @@ paymentRouter.post("/", async (req, res) => {
   }
 
   const value = normalizedValue.toFixed(2);
+  const clientUrl =
+    process.env.CLIENT_URL || "https://teriberka.onrender.com";
+  const orderId = `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 
   const createPayload = {
     amount: {
@@ -70,11 +73,10 @@ paymentRouter.post("/", async (req, res) => {
     capture: true,
     confirmation: {
       type: "redirect",
-      // сюда пользователь вернется ПОСЛЕ оплаты
-      return_url: `https://teriberka.onrender.com/payment-return`,
+      return_url: `${clientUrl}/payment-return?orderId=${orderId}`,
     },
     metadata: {
-      order_id: Date.now().toString(),
+      order_id: orderId,
     },
   };
 
@@ -107,6 +109,7 @@ paymentRouter.post("/", async (req, res) => {
 
     return res.json({
       payment_id: payment.id,
+      order_id: orderId,
       confirmation_url: confirmationUrl,
     });
 
@@ -241,39 +244,80 @@ paymentRouter.post("/notifications", async (req, res) => {
   }
 });
 
+const fetchYookassaPayment = async (paymentId) => {
+  const response = await fetch(
+    `https://api.yookassa.ru/v3/payments/${paymentId}`,
+    {
+      method: 'GET',
+      headers: {
+        Authorization:
+          'Basic ' +
+          Buffer.from(
+            `${process.env.YOO_SHOP_ID}:${process.env.YOO_SECRET_KEY}`
+          ).toString('base64'),
+        'Content-Type': 'application/json',
+      },
+    }
+  );
+
+  return response.json();
+};
+
 paymentRouter.get('/status/:paymentId', async (req, res) => {
   try {
-    console.log('params:', req.params)
-    const { paymentId } = req.params
+    const { paymentId } = req.params;
+    const payment = await fetchYookassaPayment(paymentId);
 
-    const response = await fetch(
-      `https://api.yookassa.ru/v3/payments/${paymentId}`,
-      {
-        method: 'GET',
-        headers: {
-          Authorization:
-            'Basic ' +
-            Buffer.from(
-              `${process.env.YOO_SHOP_ID}:${process.env.YOO_SECRET_KEY}`
-            ).toString('base64'),
-          'Content-Type': 'application/json',
-        },
-      }
-    )
-
-    const payment = await response.json()
-    console.log(payment);
+    if (payment?.type === 'error') {
+      return res.status(404).json({
+        error: payment.description || 'Платеж не найден',
+      });
+    }
 
     res.json({
+      payment_id: paymentId,
       status: payment.status,
       paid: payment.paid,
-    })
+    });
   } catch (error) {
-    console.error(error)
+    console.error(error);
 
     res.status(500).json({
       error: 'Ошибка проверки платежа',
-    })
+    });
+  }
+});
+
+paymentRouter.get('/status-by-order/:orderId', async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const paymentRecord = await PaymentService.findByOrderId(orderId);
+
+    if (!paymentRecord) {
+      return res.status(404).json({
+        error: 'Платеж не найден',
+      });
+    }
+
+    const payment = await fetchYookassaPayment(paymentRecord.payment_id);
+
+    if (payment?.type === 'error') {
+      return res.status(404).json({
+        error: payment.description || 'Платеж не найден',
+      });
+    }
+
+    res.json({
+      payment_id: paymentRecord.payment_id,
+      status: payment.status,
+      paid: payment.paid,
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      error: 'Ошибка проверки платежа',
+    });
   }
 });
 

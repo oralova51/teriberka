@@ -2,6 +2,7 @@ import "./BuyButton.css";
 import { useMemo, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { PaymentApi } from "../../api";
+import { setPendingPayment } from "@/entities/Payment/lib/paymentStorage";
 import type { Product } from "@/entities/Product/model/model";
 
 
@@ -74,14 +75,17 @@ export default function BuyButton({
     setIsPaymentLoading(true);
     const paymentWindow = window.open("about:blank", "_blank");
     try {
-      const url = await PaymentApi.createPayment({ value: product.price });
-      if (!url) {
-        throw new Error("Payment URL not found in response");
-      }
+      const { payment_id, order_id, confirmation_url } =
+        await PaymentApi.createPayment({
+          value: product.price,
+        });
+
+      setPendingPayment(payment_id, order_id, paymentWindow);
+
       if (paymentWindow) {
-        paymentWindow.location.href = url;
+        paymentWindow.location.href = confirmation_url;
       } else {
-        window.open(url, "_blank", "noopener,noreferrer");
+        window.open(confirmation_url, "_blank", "noopener,noreferrer");
       }
       handleClose();
     } catch (error) {

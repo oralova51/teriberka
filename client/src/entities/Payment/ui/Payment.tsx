@@ -1,69 +1,103 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router'
-import { axiosInstance } from '@/shared/lib/axiosInstance'
-import type { Payment } from '../model/model'
+import { PaymentApi, type PaymentStatusResult } from '@/features/payment/api'
+import {
+  clearPendingPayment,
+  getPendingOrderId,
+  getPendingPaymentId,
+  setPendingPayment,
+} from '../lib/paymentStorage'
+
+const POLL_INTERVAL_MS = 2000
+const POLL_MAX_ATTEMPTS = 6
+
+const FINAL_FAILED_STATUSES = new Set(['canceled'])
+
+async function fetchPaymentStatus(
+  paymentId: string | null,
+  orderId: string | null
+): Promise<PaymentStatusResult | null> {
+  if (paymentId) {
+    return PaymentApi.getPaymentStatus(paymentId)
+  }
+
+  if (orderId) {
+    return PaymentApi.getPaymentStatusByOrder(orderId)
+  }
+
+  return null
+}
 
 export default function Payment() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-
-  const paymentId = searchParams.get('paymentId')
-  console.log(paymentId);
-  
-
-  const [payment, setPayment] = useState<Payment | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const checkPayment = async () => {
+      const paymentIdFromQuery = searchParams.get('paymentId')
+      const orderIdFromQuery = searchParams.get('orderId')
+      const paymentId =
+        paymentIdFromQuery ?? getPendingPaymentId()
+      const orderId =
+        orderIdFromQuery ?? getPendingOrderId()
+
+      if (!paymentId && !orderId) {
+        navigate('/failed')
+        return
+      }
+
       try {
-        if (!paymentId) {
-          navigate('/failed')
-          return
+        for (let attempt = 0; attempt < POLL_MAX_ATTEMPTS; attempt += 1) {
+          const paymentData = await fetchPaymentStatus(paymentId, orderId)
+
+          if (!paymentData) {
+            navigate('/failed')
+            return
+          }
+
+          if (paymentData.payment_id) {
+            setPendingPayment(
+              paymentData.payment_id,
+              orderIdFromQuery ?? orderId
+            )
+          }
+
+          if (paymentData.status === 'succeeded') {
+            clearPendingPayment()
+            navigate('/success')
+            return
+          }
+
+          if (FINAL_FAILED_STATUSES.has(paymentData.status)) {
+            clearPendingPayment()
+            navigate('/failed')
+            return
+          }
+
+          const isLastAttempt = attempt === POLL_MAX_ATTEMPTS - 1
+          if (!isLastAttempt) {
+            await new Promise((resolve) => {
+              setTimeout(resolve, POLL_INTERVAL_MS)
+            })
+          }
         }
-
-        const response = await axiosInstance.get<Payment>(
-          `/api/payments/status/${paymentId}`
-        )
-
-        const paymentData = response.data
-
-        setPayment(paymentData)
-
-        if (paymentData.status === 'succeeded') {
-          navigate('/success')
-          return
-        }
-
-        if (paymentData.status === 'canceled') {
-          navigate('/failed')
-          return
-        }
-
-      } catch (error) {
-        console.error('[PAYMENT CHECK ERROR]', error)
 
         navigate('/failed')
-
+      } catch (error) {
+        console.error('[PAYMENT CHECK ERROR]', error)
+        navigate('/failed')
       } finally {
         setLoading(false)
       }
     }
 
-    checkPayment()
-  }, [navigate, paymentId])
+    void checkPayment()
+  }, [navigate, searchParams])
 
   if (loading) {
     return <div>Проверяем статус оплаты...</div>
   }
 
-  return (
-    <div>
-      <h1>Платеж</h1>
-
-      <pre>
-        {JSON.stringify(payment, null, 2)}
-      </pre>
-    </div>
-  )
+  return null
 }

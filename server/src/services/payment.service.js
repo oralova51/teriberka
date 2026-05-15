@@ -12,6 +12,7 @@ class PaymentService {
 
         confirmation_url:
           paymentData.confirmation?.confirmation_url || null,
+        order_id: paymentData.metadata?.order_id || null,
       });
       return payment;
     } catch (error) {
@@ -19,6 +20,14 @@ class PaymentService {
       throw error;
     }
   }
+  static async findByOrderId(orderId) {
+    if (!orderId || typeof orderId !== 'string') {
+      return null;
+    }
+
+    return Payment.findOne({ where: { order_id: orderId } });
+  }
+
   static async updateStatus(input) {
     try {
       // YooKassa notifications: { event, object: { id, status, ... } }
